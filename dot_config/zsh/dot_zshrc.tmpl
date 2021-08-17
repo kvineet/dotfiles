@@ -14,10 +14,8 @@ zinit light-mode for \
 ### End of Zinit's installer chunk
 
 zinit ice as"command" from"gh-r" \
-    # `starship` binary as command, from github release
-    atclone"./starship init zsh > init.zsh; ./starship completions zsh > _starship" \ 
-    # starship setup at clone(create init.zsh, completion)
-    atpull"%atclone" src"init.zsh" # pull behavior same as clone, source init.zsh
+    atclone"./starship init zsh > init.zsh; ./starship completions zsh > _starship" \
+    atpull"%atclone" src"init.zsh"
 zinit light starship/starship
 
 zinit light zdharma/fast-syntax-highlighting 
@@ -78,4 +76,6 @@ autoload -Uz compinit
 compinit
 
 zinit cdreplay -q
+
+eval "$(starship init zsh)"
 export EDITOR={{ .editor | quote }}
