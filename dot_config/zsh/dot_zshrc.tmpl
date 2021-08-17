@@ -1,0 +1,75 @@
+source {{ joinPath .xdg.data "/zinit/bin/zinit.zsh" }}
+
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+
+# Load a few important annexes, without Turbo
+# (this is currently required for annexes)
+zinit light-mode for \
+    zinit-zsh/z-a-rust \
+    zinit-zsh/z-a-as-monitor \
+    zinit-zsh/z-a-patch-dl \
+    zinit-zsh/z-a-bin-gem-node \
+    spaceship-prompt/spaceship-prompt
+
+### End of Zinit's installer chunk
+
+zinit light zdharma/fast-syntax-highlighting 
+
+zinit light zsh-users/zsh-autosuggestions
+
+zplugin light "zdharma/zsh-diff-so-fancy"
+
+zinit ice wait lucid
+zinit light olets/zsh-abbr
+
+zinit ice blockf atpull'zinit creinstall -q .'
+zinit light zsh-users/zsh-completions
+
+zinit ice from"gh-r" as"program" mv"docker* -> docker-compose" bpick"*linux*"
+zinit load docker/compose
+
+zinit light-mode lucid wait has"kubectl" for \
+  id-as"kubectl_completion" \
+  as"completion" \
+  atclone"kubectl completion zsh > _kubectl" \
+  atpull"%atclone" \
+  run-atpull \
+  zdharma/null
+
+zinit ice from"gh-r" as"program" \
+  mv"octant*/octant -> octant" \
+  bpick"*Linux-64bit*" \
+  atclone"octant completion zsh > _octant" \
+  atpull"%atclone"
+zinit load vmware-tanzu/octant
+
+zinit as"null" wait"1" lucid for \
+    sbin    Fakerr/git-recall \
+    sbin    cloneopts paulirish/git-open \
+    sbin    paulirish/git-recent \
+    sbin    davidosomething/git-my \
+    sbin atload"export _MENU_THEME=legacy" \
+  	    arzzen/git-quick-stats \
+    sbin    iwata/git-now \
+    make"PREFIX=$ZPFX install" \
+            tj/git-extras \
+    sbin"bin/git-dsf;bin/diff-so-fancy" \
+	    zdharma/zsh-diff-so-fancy \
+    sbin"git-url;git-guclone" make"GITURL_NO_CGITURL=1" \
+            zdharma/git-url
+
+zinit pack for fzf
+zinit ice as"command" wait lucid \
+    atinit"export PYTHONPATH=$ZPFX/lib/python3.7/site-packages/" \
+    atclone"PYTHONPATH=$ZPFX/lib/python3.7/site-packages/ \
+    python3 setup.py --quiet install --prefix $ZPFX" \
+    atpull'%atclone' test'0' \
+    pick"$ZPFX/bin/asciinema"
+zinit load asciinema/asciinema.git
+
+autoload -Uz compinit
+compinit
+
+zinit cdreplay -q
+export EDITOR={{ .editor | quote }}

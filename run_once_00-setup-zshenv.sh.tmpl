@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+
+if [ -d /etc/zsh ]; then
+	sudo cp {{ joinPath .chezmoi.sourceDir "etc/zsh_zshenv" | quote }} /etc/zsh/zshenv
+fi
