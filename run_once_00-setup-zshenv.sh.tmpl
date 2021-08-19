@@ -1,5 +1,9 @@
 #!/usr/bin/env sh
 
+if ! command -v chezmoi &> /dev/null; then
+	echo "chezmoi is required for templating..."
+	exit 1
+fi
 if [ -d /etc/zsh ]; then
-	sudo cp {{ joinPath .chezmoi.sourceDir "etc/zsh_zshenv" | quote }} /etc/zsh/zshenv
+	chezmoi execute-template < {{ joinPath .chezmoi.sourceDir "etc/zsh_zshenv" | quote }} | sudo tee /etc/zsh/zshenv > /dev/null
 fi
