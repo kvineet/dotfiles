@@ -5,7 +5,7 @@
 add_newline = true
 
 # Order of modules on prompt
-format = """[](bg:#464347 fg:#AFD700)\
+format = """[ॐ ](bg:#464347 fg:#AFD700)\
         $time\
         $username\
         $hostname\
@@ -139,10 +139,10 @@ format = "[[](bg:#32BBF9 fg:#464347)$symbol$version[](bg:#464347 fg:#32BBF
 style = "italic bg:#6F6A70 fg:#EEEEEE"
 read_only = ""
 read_only_style = "bg:#ff3322 fg:#EEEEEE"
-truncation_length = 4
+truncation_length = 8
 truncate_to_repo = true
-# truncation_symbol = "…"
-# fish_style_pwd_dir_length = 3
+truncation_symbol = "…"
+# fish_style_pwd_dir_length = 10
 format = "([[](bg:#ff3322 fg:#464347)$read_only[](bg:#464347 fg:#ff3322)]($read_only_style))[[](bg:#6F6A70 fg:#464347)$path[](bg:#464347 fg:#6F6A70)]($style)"
 
 [directory.substitutions]
@@ -151,8 +151,7 @@ format = "([[](bg:#ff3322 fg:#464347)$read_only[](bg:#464347 fg:#ff3322)](
 "~/Movies" = ""
 "~/Pictures" = ""
 "~/Sources" = ""
-"~" = " "
-"/" = "  "
+"~" = ""
 
 [docker_context]
 # disabled = true
@@ -231,7 +230,7 @@ format = '\([[](bg:#E0B25D fg:#464347)$state($progress_current/$progress_tota
 
 [git_status]
 # disabled = true
-style = "bg:#E0B25D fg:#000000"
+style = "bg:#E0B25D fg:#111111"
 stashed = " ${count}"
 ahead = "ﲗ ${count}"
 behind = "ﲔ ${count}"
