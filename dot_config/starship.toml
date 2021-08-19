@@ -74,7 +74,7 @@ vicmd_symbol = "[[](bg:#6f6a70 fg:#464347)[](bg:#464347 fg:#6f6a70)](bo
 format = "$symbol "
 
 [line_break]
-disabled = true
+disabled = false
 
 # Module configurations
 [aws]
@@ -141,7 +141,7 @@ read_only = ""
 read_only_style = "bg:#ff3322 fg:#EEEEEE"
 truncation_length = 8
 truncate_to_repo = true
-truncation_symbol = "…"
+# truncation_symbol = "…"
 # fish_style_pwd_dir_length = 10
 format = "([[](bg:#ff3322 fg:#464347)$read_only[](bg:#464347 fg:#ff3322)]($read_only_style))[[](bg:#6F6A70 fg:#464347)$path[](bg:#464347 fg:#6F6A70)]($style)"
 
@@ -285,7 +285,7 @@ format = "[[](bg:#4063D8 fg:#464347)$symbol$version[](bg:#464347 fg:#4063D
 disabled = false
 symbol = "☸︎"
 style = "bg:#3371E3 fg:#EEEEEE"
-format = '[[](bg:#3371E3 fg:#464347)$symbol$context(\($namespace\))[](bg:#464347 fg:#3371E3)]($style)'
+format = '[[](bg:#3371E3 fg:#464347)$symbol$context/($namespace)[](bg:#464347 fg:#3371E3)]($style)'
 
 [memory_usage]
 # disabled = false
