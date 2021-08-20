@@ -1,0 +1,8 @@
+#!/bin/sh
+if [[ ! -f {{ joinPath .xdg.data "/zinit/bin/zinit.zsh" }} ]]; then
+	git --work-tree={{ joinPath .xdg.data "/zinit/bin" }} pull origin master
+fi
+
+if command -v doom &> /dev/null; then
+   doom upgrade -f
+fi
