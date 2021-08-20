@@ -7,8 +7,10 @@ export XDG_CACHE_HOME={{ .xdg.cache }}
 
 # wrangle these waywards to XDG
 export ASPELL_CONF="per-conf {{ joinPath .xdg.config "/aspell/aspell.conf" }}; personal {{ joinPath .xdg.config "/aspell/en.pws" }}; repl {{ joinPath .xdg.config "/aspell/en.prepl" }}"
+export AZURE_CONFIG_DIR={{ joinPath .xdg.data "/azure" | quote }}
 export AWS_SHARED_CREDENTIALS_FILE={{ joinPath .xdg.config "/aws/credentials" | quote }}
 export AWS_CONFIG_FILE={{ joinPath .xdg.config "/aws/config" | quote }}
+export BUCHHALTUNG={{ joinPath .xdg.config "/buchhaltung" | quote }}
 export CAGO_HOME={{ joinPath .xdg.data "/cargo" | quote }}
 export DOCKER_CONFIG={{ joinPath .xdg.config "/docker" | quote }}
 export DOOMDIR={{ joinPath .xdg.config "/doom" | quote }}
@@ -16,6 +18,7 @@ export SPACEMACSDIR={{ joinPath .xdg.config "/spacemacs" | quote }}
 export GEM_HOME={{ joinPath .xdg.data "/gem" | quote }}
 export GEM_SPEC_CACHE={{ joinPath .xdg.cache "/gem" | quote }}
 export GNUPGHOME={{ joinPath .xdg.data "/gnupg" | quote }}
+export GOLEDGER_CONF={{ joinPath .xdg.config "/goledger" | quote }}
 export GOPATH={{ joinPath .xdg.data "/go" | quote }}
 export GRADLE_USER_HOME={{ joinPath .xdg.data "/gradle" | quote }}
 export GTK_RC_FILES={{ joinPath .xdg.config "/gtk-1.0/gtkrc" | quote }}
@@ -25,11 +28,10 @@ export LESSKEY={{ joinPath .xdg.config "/less/lesskey" | quote }}
 export LESSHISTFILE={{ joinPath .xdg.cache "/less/history" | quote }}
 export NPM_CONFIG_USERCONFIG={{ joinPath .xdg.config "/npm/npmrc" | quote }}
 export NVM_DIR={{ joinPath .xdg.data "/nvm" | quote }}
+export PARALLEL_HOME={{ joinPath .xdg.config "/parallel" | quote }}
 export RUSTUP_HOME={{ joinPath .xdg.data "/rustup" | quote }}
 export WGETRC={{ joinPath .xdg.config "/wgetrc" | quote }}
 export WINEPREFIX={{ joinPath .xdg.data "/wineprefixes/default" | quote }}
-export GOLEDGER_CONF={{ joinPath .xdg.config "/goledger" | quote }}
-export BUCHHALTUNG={{ joinPath .xdg.config "/buchhaltung" | quote }}
 export WORKON_HOME={{ joinPath .xdg.data "/virtualenv/" | quote }}
 
 # Does not work with SDDM/KDE Plasma
