@@ -1,9 +1,9 @@
-#+TITLE: KVineet's Emacs Configuration
-#+AUTHOR: Vineet Kulkarni
-#+EMAIL: mail@kvineet.in
-#+STARTUP: overview
-#+HTML_HEAD: <link rel='shortcut icon' type='image/png' href='https://www.gnu.org/software/emacs/favicon.png'>
-#+PROPERTY: header-args :comments link
+#+title: KVineet's Emacs Configuration
+#+author: Vineet Kulkarni
+#+email: mail@kvineet.in
+#+startup: overview
+#+html_head: <link rel='shortcut icon' type='image/png' href='https://www.gnu.org/software/emacs/favicon.png'>
+#+property: header-args :comments link
 https://github.com/tecosaur/emacs-config/blob/master/config.org
 
 * Preamble
@@ -64,7 +64,7 @@ Define paths related to org files.
 #+BEGIN_SRC emacs-lisp :tangle config.el
 (setq ledger-directory "~/Documents/accounting/")
 #+END_SRC
-* TODO systemd unit
+* TODO [#B] COMMENT systemd unit
 * Workarounds
 ** Disable perspective mode from launching new workspace
 #+BEGIN_SRC emacs-lisp :tangle config.el
@@ -92,10 +92,11 @@ are the three important ones:
 
 They all accept either a font-spec, =font string ("Input Mono-12")=, or ~xlfd font
 string~.
-*** Basic fonts
+*** TODO Basic fonts
+- [ ] font size based on screen width
 #+BEGIN_SRC emacs-lisp :tangle config.el
 (setq doom-font
-      (font-spec :family "Iosevka" :size 20))
+      (font-spec :family "Iosevka" :size 18))
 (setq doom-big-font
       (font-spec :family "Iosevka" :size 30))
 #+END_SRC
@@ -146,7 +147,7 @@ numbers are disabled. For relative line numbers, set this to `relative'.
 #+BEGIN_SRC emacs-lisp :tangle config.el
 (setq truncate-string-ellipsis "…")
 #+END_SRC
-** COMMENT packages
+** packages
 #+BEGIN_SRC emacs-lisp :tangle packages.el
 (package! org-pretty-tags :pin "40fd72f3e7...")
 #+END_SRC
@@ -238,23 +239,43 @@ priority ligatures working correctly.
     :checkedbox    "[X]"
     :list_property "::"
     :results       "#+RESULTS:"
+    :results       "#+results:"
     :property      "#+PROPERTY:"
+    :property      "#+property:"
     :property      ":PROPERTIES:"
+    :property      ":properties:"
+    :startup       ":#+STARTUP:"
+    :startup       ":#+startup:"
+    :head          ":#+html_head:"
+    :head          ":#+HTML_HEAD:"
     :end           ":END:"
+    :end           ":end:"
     :options       "#+OPTIONS:"
+    :options       "#+options:"
     :title         "#+title:"
     :title         "#+TITLE:"
     :subtitle      "#+SUBTITLE:"
+    :subtitle      "#+subtitle:"
     :author        "#+AUTHOR:"
+    :author        "#+author:"
     :email         "#+EMAIL:"
+    :email         "#+email:"
     :date          "#+DATE:"
+    :date          "#+date:"
     :latex_class   "#+LATEX_CLASS:"
+    :latex_class   "#+latex_class:"
     :latex_header  "#+LATEX_HEADER:"
+    :latex_header  "#+latex_header:"
     :beamer_header "#+BEAMER_HEADER:"
+    :beamer_header "#+beamer_header:"
     :begin_quote   "#+BEGIN_QUOTE"
+    :begin_quote   "#+begin_quote"
     :end_quote     "#+END_QUOTE"
+    :end_quote     "#+end_quote"
     :begin_export  "#+BEGIN_EXPORT"
+    :begin_export  "#+begin_export"
     :end_export    "#+END_EXPORT"
+    :end_export    "#+end_export"
     :priority_a    "[#A]"
     :priority_b    "[#B]"
     :priority_c    "[#C]"
@@ -936,7 +957,7 @@ lets configure it.
                            :order 90)
                           (:discard (:tag ("Chore" "Routine" "Daily")))))))))))
 #+END_SRC
-* Elfeed
+* COMMENT Elfeed
 #+BEGIN_SRC emacs-lisp :tangle packages.el
 (package! elfeed-goodies)
 #+END_SRC
@@ -999,9 +1020,11 @@ enable the package after ledger-mode
         +childframe)
        ;;helm              ; the *other* search engine for love and life
        ;;ido               ; the other *other* search engine...
-       (ivy
-        +icons
-        +prescient)
+       ;; (ivy
+       ;; +icons
+       ;; +prescient)
+       (vertico
+         +icons)
 
        :ui
        deft              ; notational velocity for Emacs
@@ -1015,7 +1038,9 @@ enable the package after ledger-mode
        hl-todo           ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
        hydra
        indent-guides     ; highlighted indent columns
-       (ligatures +extra)
+       (ligatures
+        +extra
+        +iosevka)
        ;;minimap           ; show a map of the code on the side
        modeline          ; snazzy, Atom-inspired modeline, plus API
        nav-flash         ; blink cursor line after big motions
@@ -1091,7 +1116,7 @@ enable the package after ledger-mode
 
        :os
        (:if IS-MAC macos)  ; improve compatibility with macOS
-       ;;tty               ; improve the terminal Emacs experience
+       tty               ; improve the terminal Emacs experience
 
        :lang
        ;;agda              ; types of types of types of types...

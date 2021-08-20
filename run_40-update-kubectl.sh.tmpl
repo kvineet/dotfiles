@@ -1,3 +1,4 @@
+{{- if (contains .tools "kubectl" )}}
 #!/usr/bin/env sh
 
 if command -v kubectl &> /dev/null; then
@@ -21,3 +22,4 @@ else
 fi
 rm kubectl
 rm kubectl.sha256
+{{- end }}

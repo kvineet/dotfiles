@@ -1,8 +1,10 @@
-#!/bin/sh
+#!/usr/bin/env sh
+
+{{- if (eq .shell "zsh") }}
 if [[ ! -f {{ joinPath .xdg.data "/zinit/bin/zinit.zsh" }} ]]; then
 	git --work-tree={{ joinPath .xdg.data "/zinit/bin" }} pull origin master
 fi
-
-if command -v doom &> /dev/null; then
+{{- end }}
+if command -v doom &> /dev/null && command -v emacs &> /dev/null; then
    doom upgrade -f
 fi

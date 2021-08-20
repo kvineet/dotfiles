@@ -18,6 +18,5 @@ if test -d {{ joinPath .xdg.config "profile.d" }}; then
         unset profile
 fi
 
-appendpath {{ joinPath .xdg.config "/emacs/bin/" }}
 appendpath "${GOPATH}/bin"
 unset -f appendpath

@@ -1,0 +1,17 @@
+{{- if (eq .shell "zsh") -}}
+#!/usr/bin/env sh
+
+if ! command -v chezmoi &> /dev/null; then
+	echo "chezmoi is required. Quitting..."
+	exit 1
+fi
+echo "[chezmoi] Creating zsh config"
+sudo mkdir -p /etc/zsh
+chezmoi execute-template < {{ joinPath .chezmoi.sourceDir "etc/zsh_zshenv" | quote }} | sudo tee /etc/zsh/zshenv > /dev/null
+
+if [[ ! -f {{.xdg.data}}/zinit/bin/zinit.zsh ]]; then
+    ZPLG_HOME={{ .xdg.data}}/zinit sh -c "$(curl -fsSL https://raw.githubusercontent.com/zdharma/zinit/master/doc/install.sh)"
+fi
+
+chsh -s /bin/zsh
+{{- end }}

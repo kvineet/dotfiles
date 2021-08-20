@@ -2,9 +2,9 @@
 
 {{ if (eq .chezmoi.osRelease.id "manjaro") -}}
   {{- if ( contains "WSL" .chezmoi.kernel.osrelease) -}}
-  sudo pacman -S - < {{ joinPath .chezmoi.sourceDir "etc/pklist/pacman.wsl.lst" }}
+  sudo pacman -Syu --noconfirm - < {{ joinPath .chezmoi.sourceDir "etc/pklist/pacman.wsl.lst" }}
   {{- else -}}
-  sudo pacman -S - < {{ joinPath .chezmoi.sourceDir "etc/pklist/pacman.lst" }}
+  sudo pacman -Syu --noconfirm - < {{ joinPath .chezmoi.sourceDir "etc/pklist/pacman.lst" }}
   {{- end -}}
 {{ else if (eq .chezmoi.osRelease.id "ubuntu") -}}
 # TODO install same packages
