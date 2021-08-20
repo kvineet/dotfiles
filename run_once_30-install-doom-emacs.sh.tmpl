@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+
+if [[ ! -f {{ joinPath .xdg.config "emacs/init.el" | quote }} ]];then
+	git clone --depth 1 https://github.com/hlissner/doom-emacs {{ joinPath .xdg.config "/emacs" | quote }}
+	{{ joinPath .xdg.config "/emacs/bin/doom" | quote }} install
+fi
