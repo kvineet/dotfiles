@@ -1,0 +1,6 @@
+* Inbox
+** TODO [#A] genrate ssh config
+*** acceptance
+- [ ] dot_ssh\config.tmpl added to project
+- [ ] configuration for separate identities and SVN providers gets generated
+- [ ] configuration is not visible in plain text in public repo
