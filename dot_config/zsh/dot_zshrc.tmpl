@@ -11,6 +11,8 @@ if [[ -r {{ joinPath .xdg.cache "/p10k-instant-prompt-${(%):-%n}.zsh" | quote }}
 fi
 {{ end }}
 HISTFILE=~/.cache/histfile
+HISTSIZE=10000
+SAVEHIST=10000
 
 ## Keybindings section
 bindkey -e
