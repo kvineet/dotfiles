@@ -4,5 +4,8 @@ if command -v emacs &> /dev/null && [[ ! -f {{ joinPath .xdg.config "emacs/init.
 	git clone --depth 1 https://github.com/hlissner/doom-emacs {{ joinPath .xdg.config "/emacs" | quote }}
 	{{ joinPath .xdg.config "/emacs/bin/doom" | quote }} -y install
 fi
+# Tangle private config
+sh -c "{{ joinPath .xdg.config "/emacs/bin/org-tangle" }} {{ .joinPath .xdg.config "/doom/config.org" }}"
 
+# setup emacs/bin to be added to path
 echo appendpath {{ joinPath .xdg.config "/emacs/bin/" }} > {{ joinPath .xdg.config "/profile.d/20-emacs-bin.sh" }}
