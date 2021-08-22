@@ -1,3 +1,4 @@
+alacritty
 aria2
 aspell
 aspell-en
@@ -43,10 +44,11 @@ openjdk11-doc
 openjdk11-src
 openssh
 pacman
-pamac-cli
+pacui
 parallel
 patch
 pkgconf
+podman
 procps-ng
 python-pip
 python-pipx
@@ -72,4 +74,5 @@ ttc-iosevka
 ttf-dejavu
 wget
 which
+yay
 zsh
