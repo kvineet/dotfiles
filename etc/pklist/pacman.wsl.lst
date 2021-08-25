@@ -12,6 +12,7 @@ cmake
 emacs
 fakeroot
 fd
+firefox
 flex
 fzf
 gawk
@@ -21,6 +22,7 @@ git
 git-lfs
 gnuplot
 go
+gocryptfs
 graphviz
 grep
 groff
