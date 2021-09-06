@@ -25,6 +25,7 @@ coreutils
 cpupower
 crda
 cronie
+cryfs
 cryptsetup
 cups
 cups-pdf
@@ -47,6 +48,7 @@ efibootmgr
 egl-wayland
 elisa
 emacs
+encfs
 ethtool
 exfat-utils
 f2fs-tools
@@ -124,6 +126,7 @@ kdeconnect
 kdecoration
 kdenlive
 kdeplasma-addons
+keepass
 kgamma5
 khotkeys
 kimageannotator
@@ -234,6 +237,7 @@ otf-overpass
 oxygen
 pacman
 pamac-gtk
+pamac-tray-icon-plasma
 papirus-maia-icon-theme
 partitionmanager
 pavucontrol
