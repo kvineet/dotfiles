@@ -32,6 +32,7 @@ iputils
 jdk11-openjdk
 jq
 keychain
+kubectl
 ledger
 libtool
 lsb-release
