@@ -41,8 +41,8 @@ Define paths related to org files.
 #+BEGIN_SRC emacs-lisp :tangle config.el
 (setq org-directory (cond
                      (IS-WINDOWS "~/../../Sync/org/")
-                     (IS-LINUX "~/Documents/org/")
-                     (t "~/Documents/org/")
+                     (IS-LINUX "~/Sync/org/")
+                     (t "~/Sync/org/")
                      ))
 #+END_SRC
 *** =org-roam= directory
@@ -62,7 +62,7 @@ Define paths related to org files.
 #+END_SRC
 ** ledger
 #+BEGIN_SRC emacs-lisp :tangle config.el
-(setq ledger-directory "~/Documents/accounting/")
+(setq ledger-directory "~/Sync/accounting/")
 #+END_SRC
 * TODO [#B] COMMENT systemd unit
 * Workarounds
@@ -76,7 +76,7 @@ I have plenty of disk space, this is stupid default. It also breaks every-time.
 #+BEGIN_SRC emacs-lisp :tangle config.el
 (setq undo-fu-session-compression nil)
 #+END_SRC
-** hydra is better for =read-action=
+** COMMENT hydra is better for =read-action=
 #+BEGIN_SRC emacs-lisp :tangle config.el
 (setq ivy-read-action-function #'ivy-hydra-read-action)
 #+END_SRC
