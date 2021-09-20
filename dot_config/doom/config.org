@@ -491,6 +491,11 @@ Enable caching of journal files, as we are using encryption.
                                     :file-name "notes/%<%Y%m%d%H%M%S>-${slug}"
                                     :head "#+title: ${title}\n"
                                     :unnarrowed t)
+                                   ("g" "Genealogy" plain (function org-roam--capture-get-point)
+                                    "%?"
+                                    :file-name "genealogy/%<%Y%m%d%H%M%S>-${slug}"
+                                    :head "#+title: ${title}\n#+category: ${title}"
+                                    :unnarrowed t)
                                    ("p" "People" plain (function org-roam--capture-get-point)
                                     "%?"
                                     :file-name "people/%<%Y%m%d%H%M%S>-${slug}"
