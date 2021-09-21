@@ -40,15 +40,26 @@ creates source block for =init.el=, while =srcdp= snippet creates source block f
 Define paths related to org files.
 #+BEGIN_SRC emacs-lisp :tangle config.el
 (setq org-directory (cond
-                     (IS-WINDOWS "~/../../Sync/org/")
-                     (IS-LINUX "~/Sync/org/")
-                     (t "~/Sync/org/")
+                     (IS-WINDOWS
+                      (concat (file-name-as-directory
+                               (concat (file-name-as-directory
+                                        (concat (file-name-as-directory
+                                                 (concat (file-name-as-directory (getenv "HOME")) "..")) "..")) "Sync")) "org"))
+                     (IS-LINUX
+                      (concat (file-name-as-directory
+                               (concat (file-name-as-directory (getenv "HOME")) "Sync")) "org"))
+                     (t
+                      (concat (file-name-as-directory
+                               (concat (file-name-as-directory (getenv "HOME")) "Sync")) "org"))
                      ))
 #+END_SRC
 *** =org-roam= directory
 #+BEGIN_SRC emacs-lisp :tangle config.el
-(setq org-roam-directory (concat org-directory "roam"))
-(setq org-roam-db-location (concat org-directory ".roam.db"))
+(setq org-roam-directory (concat (file-name-as-directory org-directory) "roam"))
+(setq org-roam-db-location
+      (concat (file-name-as-directory
+      (concat (file-name-as-directory
+      (concat (file-name-as-directory (getenv "XDG_CACHE_HOME")) "org")) "roam")) "roam.db"))
 (setq org-roam-index-file "index.org")
 (setq org-roam-tag-sources '(prop last-directory))
 #+END_SRC
@@ -62,7 +73,9 @@ Define paths related to org files.
 #+END_SRC
 ** ledger
 #+BEGIN_SRC emacs-lisp :tangle config.el
-(setq ledger-directory "~/Sync/accounting/")
+(setq ledger-directory
+      (concat (file-name-as-directory
+               (concat (file-name-as-directory (getenv "HOME")) "Sync")) "accounting"))
 #+END_SRC
 * TODO [#B] COMMENT systemd unit
 * Workarounds
@@ -526,6 +539,10 @@ Enable caching of journal files, as we are using encryption.
                                     :file-name "other/%<%Y%m%d%H%M%S>-${slug}"
                                     :head "#+title: ${title}\n"
                                     :unnarrowed t)))
+#+END_SRC
+*** TODO COMMENT daily templates
+#+BEGIN_SRC emacs-lisp :tangle config.el
+
 #+END_SRC
 *** COMMENT encryption
 #+BEGIN_SRC emacs-lisp :tangle config.el
@@ -1210,4 +1227,4 @@ enable the package after ledger-mode
 #+END_SRC
 
 * Local
-#  LocalWords:  KVineet Modline modline
+#  LocalWords:  KVineet Modline modline Prettification
