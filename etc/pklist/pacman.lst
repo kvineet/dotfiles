@@ -5,6 +5,7 @@ alacritty
 alsa-plugins
 alsa-utils
 amd-ucode
+android-tools
 ark
 aspell
 aspell-en
@@ -75,6 +76,7 @@ go
 go-tools
 gocryptfs
 gopls
+gramps
 grantleetheme
 graphviz
 grep
