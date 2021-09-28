@@ -1245,4 +1245,4 @@ Lets configure our favorite language. It's =go= by-the-way
 #+END_SRC
 
 * Local
-#  LocalWords:  KVineet Modline modline Prettification
+#  LocalWords:  KVineet Modline modline Prettification leetcode LeetCode
