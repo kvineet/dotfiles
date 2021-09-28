@@ -37,7 +37,6 @@ diffutils
 dmenu-manjaro
 dmraid
 dnsmasq
-docker
 docker-compose
 dolphin
 dolphin-plugins
@@ -258,6 +257,9 @@ plasma-wayland-session
 plasma-workspace
 plasma-workspace-wallpapers
 plymouth
+podman
+podman-compose
+podman-dnsname
 polkit-kde-agent
 powerdevil
 procps-ng
