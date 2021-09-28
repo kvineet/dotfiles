@@ -77,6 +77,12 @@ Define paths related to org files.
       (concat (file-name-as-directory
                (concat (file-name-as-directory (getenv "HOME")) "Sync")) "accounting"))
 #+END_SRC
+** leetcode
+#+BEGIN_SRC emacs-lisp :tangle config.el
+(setq leetcode-directory
+      (concat (file-name-as-directory
+               (concat (file-name-as-directory (getenv "HOME")) "projects")) "leetcode"))
+#+END_SRC
 * TODO [#B] COMMENT systemd unit
 * Workarounds
 ** Disable perspective mode from launching new workspace
@@ -1029,6 +1035,17 @@ enable the package after ledger-mode
  :leader
  :prefix ("o" . "+open")
  :desc "Ledger files" "l" #'vk/open-accounting-file)
+#+END_SRC
+* LeetCode
+Lets enable =leetcode.el=
+#+BEGIN_SRC emacs-lisp :tangle packages.el
+ (package! leetcode)
+#+END_SRC
+Lets configure our favorite language. It's =go= by-the-way
+#+BEGIN_SRC emacs-lisp :tangle config.el
+(setq leetcode-prefer-language "golang")
+(setq leetcode-prefer-sql "mysql")
+(setq leetcode-save-solutions t)
 #+END_SRC
 * Doom modules
 #+BEGIN_SRC emacs-lisp :tangle init.el
