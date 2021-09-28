@@ -1,4 +1,4 @@
-{{- if (contains .tools "azcli") }}
+{{- if (has "azcli" .tools) }}
 #!/usr/bin/env sh
 
 if ! command -v az &> /dev/null; then

@@ -1,10 +1,19 @@
 data:
+  update:
+    interval: 2 days
   editor: /usr/sbin/nvim
   shell: zsh
   zsh:
-    prompt: p10k     # possible values starship, p10k
+    prompt: p10k # possible values starship, p10k
   xdg:
     config: $HOME/.config
     cache: $HOME/.cache
     data: $HOME/.local/share
-  tools: kubectl azcli
+  tools:
+    - kubectl
+    - azcli
+  podman:
+    - emby
+    - torrent
+    - plex
+    - webDav

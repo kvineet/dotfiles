@@ -1,4 +1,4 @@
-{{- if (contains .tools "kubectl" )}}
+{{- if (has "kubectl" .tools)}}
 #!/usr/bin/env sh
 
 if command -v kubectl &> /dev/null; then
