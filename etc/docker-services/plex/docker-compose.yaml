@@ -1,0 +1,41 @@
+version: "3"
+services:
+  plexserver:
+    container_name: plexserver
+    devices:
+      - /dev/dri/renderD128:/dev/dri
+    environment:
+      - UID=1000
+      - GID=1000
+      - PUID=1000
+      - PGID=1000
+      - GIDLIST=1000
+      - VERSION=docker
+      - PLEX_CLAIM=claim-Af5k8isp94YA2Wrs4BeE
+      - PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+      - LANG=en_US.UTF-8
+      - AMDGPU_IDS=/share/libdrm/amdgpu.ids
+      - LD_LIBRARY_PATH=/lib:/system
+      - LIBVA_DRIVERS_PATH=/lib/dri
+      - OCL_ICD_VENDORS=/etc/OpenCL/vendors
+      - PCI_IDS_PATH=/share/hwdata/pci.ids
+      - SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=compute,video,utility
+    image: ghcr.io/linuxserver/plex:latest
+    labels:
+      com.centurylinklabs.watchtower.enable: true
+    logging:
+      driver: json-file
+      options: {}
+    networks:
+      - plex_default
+    ports:
+      - 13387:32400
+    restart: unless-stopped
+    volumes:
+      - /srv/webDav:/mnt/share1:rw
+      - /media/Media/plex/:/config:rw
+networks:
+  plex_default:
+    external: true
