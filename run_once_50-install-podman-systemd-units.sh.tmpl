@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+# Copy service files to systemd units folder
+sudo cp {{ joinPath .chezmoi.sourceDir "etc/systemd" | quote }}/*.service /etc/systemd/system/
+# Reload daemon to load new unit files
+systemctl daemon-reload
+# enable services
+systemctl enable pod-emby pod-torrent
