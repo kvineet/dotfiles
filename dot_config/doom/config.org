@@ -1179,11 +1179,12 @@ Lets configure our favorite language. It's =go= by-the-way
        (go +lsp)         ; the hipster dialect
        (haskell
         +dante
+        +lsp
         +ghcide)
        ;;hy                ; readability of scheme w/ speed of python
        ;;idris             ; a language you can depend on
        (json +lsp)
-       (java +meghanada)
+       (java +lsp)
        ;;javascript        ; all(hope(abandon(ye(who(enter(here))))))
        ;;julia             ; a better, faster MATLAB
        ;;kotlin            ; a better, slicker Java(Script)
