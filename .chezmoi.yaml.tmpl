@@ -10,10 +10,16 @@ data:
     cache: $HOME/.cache
     data: $HOME/.local/share
   tools:
+    - --
+{{- if (contains "nuance" .chezmoi.fqdnHostname) }}
     - kubectl
     - azcli
+{{ end }}
   podman:
-    - emby
-    - torrent
-    - plex
-    - webDav
+  - --
+{{- if (contains "pc" .chezmoi.fqdnHostname) }}
+  - emby
+  - torrent
+  - plex
+  - webDav
+{{ end -}}
