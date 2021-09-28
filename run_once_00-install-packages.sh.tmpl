@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-
+echo "generating pkg-list..."
 {{ if (eq .chezmoi.osRelease.id "manjaro") -}}
   {{- if ( contains "WSL" .chezmoi.kernel.osrelease) -}}
   sudo pacman -Syu --noconfirm --needed - < {{ joinPath .chezmoi.sourceDir "etc/pklist/pacman.wsl.lst" }}
