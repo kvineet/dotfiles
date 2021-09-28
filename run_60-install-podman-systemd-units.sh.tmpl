@@ -16,19 +16,19 @@ sudo podman generate systemd --files --name emby
 {{ end -}}
 {{ if (has "torrent" .podman) }}
 if ! sudo podman pod exists torrent; then
-sudo podman-compose -f {{ joinPath .chezmoi.sourceDir "etc/docker-services/torrent/docker-compose.yaml" | quote }} up -d
+    sudo podman-compose -f {{ joinPath .chezmoi.sourceDir "etc/docker-services/torrent/docker-compose.yaml" | quote }} up -d
 fi
 sudo podman generate systemd --files --name torrent
 {{ end -}}
 {{ if (has "plex" .podman) }}
 if ! sudo podman pod exists plex; then
-sudo podman-compose -f {{ joinPath .chezmoi.sourceDir "etc/docker-services/plex/docker-compose.yaml" | quote }} up -d
+    sudo podman-compose -f {{ joinPath .chezmoi.sourceDir "etc/docker-services/plex/docker-compose.yaml" | quote }} up -d
 fi
 sudo podman generate systemd --files --name plex
 {{ end -}}
 {{ if (has "webDav" .podman) }}
 if ! sudo podman pod exists webdav; then
-sudo podman-compose -f {{ joinPath .chezmoi.sourceDir "etc/docker-services/webdav/docker-compose.yaml" | quote }} up -d
+    sudo podman-compose -f {{ joinPath .chezmoi.sourceDir "etc/docker-services/webdav/docker-compose.yaml" | quote }} up -d
 fi
 sudo podman generate systemd --files --name webdav
 {{ end -}}
@@ -36,19 +36,19 @@ sudo podman generate systemd --files --name webdav
 # Copy service files to systemd units folder
 sudo mv *.service /etc/systemd/system/
 # Reload daemon to load new unit files
-systemctl daemon-reload
+sudo systemctl daemon-reload
 # enable services
 {{ if (has "emby" .podman ) -}}
-systemctl enable pod-emby
+sudo systemctl enable pod-emby
 {{ end -}}
 {{ if (has "torrent" .podman ) -}}
-systemctl enable pod-torrent
+sudo systemctl enable pod-torrent
 {{ end -}}
 {{ if (has "plex" .podman ) -}}
-systemctl enable pod-plex
+sudo systemctl enable pod-plex
 {{ end -}}
 {{ if (has "webDav" .podman ) -}}
-systemctl enable pod-webDav
+sudo systemctl enable pod-webdav
 {{ end -}}
 
 {{ end -}}
