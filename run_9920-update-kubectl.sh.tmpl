@@ -1,5 +1,4 @@
-#!/usr/bin/env sh
-{{- if (has "kubectl" .tools)}}
+{{- if (has "kubectl" .tools)}}#!/usr/bin/env sh
 
 if command -v kubectl &> /dev/null; then
     current=$(kubectl version --short --client | cut -d " " -f 3)

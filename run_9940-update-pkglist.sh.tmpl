@@ -1,11 +1,9 @@
-#!/usr/bin/env sh
-
-{{ if (eq .chezmoi.osRelease.id "manjaro") -}}
-  {{- if ( contains "WSL" .chezmoi.kernel.osrelease) -}}
-  pacman -Qqen > {{ joinPath .chezmoi.sourceDir "etc/pklist/pacman.wsl.lst" }}
-  {{- else -}}
-  pacman -Qqen > {{ joinPath .chezmoi.sourceDir "etc/pklist/pacman.lst" }}
-  {{- end -}}
+{{ if (eq .chezmoi.osRelease.id "manjaro") -}}#!/usr/bin/env sh
+{{ if ( contains "WSL" .chezmoi.kernel.osrelease) -}}
+pacman -Qqen > {{ joinPath .chezmoi.sourceDir "etc/pklist/pacman.wsl.lst" }}
+{{ else -}}
+pacman -Qqen > {{ joinPath .chezmoi.sourceDir "etc/pklist/pacman.lst" }}
+{{ end -}}
 {{ else if (eq .chezmoi.osRelease.id "ubuntu") -}}
 # TODO install same packages
 {{- end }}

@@ -1,4 +1,4 @@
-{{ if (eq .zsh.prompt "starship") }}
+{{ if (eq .zsh.prompt "starship") }}# -*- mode: sh -*-
 if command -v starship &> /dev/null; then
    eval "$(starship init zsh)"
 fi
