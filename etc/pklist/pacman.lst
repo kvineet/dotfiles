@@ -13,6 +13,7 @@ audacity
 b43-fwcutter
 barrier
 bash
+bitwarden-cli
 bluedevil
 breeze
 breeze-gtk
@@ -207,7 +208,6 @@ manjaro-settings-manager-kcm
 manjaro-system
 manjaro-vaapi
 manjaro-zsh-config
-mcomix
 mdadm
 meld
 memtest86+
