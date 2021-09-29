@@ -454,6 +454,11 @@ I am using priority matrix to determine what task should be taken up next.
       :desc "Rifle ROAM Notes" "r" #'+vk/rifle-roam
 )
 #+END_SRC
+** =org-sidebar=
+Enable =org-sidebar=
+#+BEGIN_SRC emacs-lisp :tangle packages.el
+(package! org-sidebar)
+#+END_SRC
 ** =org-journal= files
 *** date formats
 I want the date format to be Day, date month year
@@ -1145,7 +1150,7 @@ Lets configure our favorite language. It's =go= by-the-way
        magit             ; a git porcelain for Emacs
        make              ; run make tasks from Emacs
        ;;pass              ; password manager for nerds
-       ;;pdf               ; pdf enhancements
+       pdf               ; pdf enhancements
        ;;prodigy           ; FIXME managing external services & code builders
        rgb               ; creating color strings
        ;;taskrunner        ; taskrunner for all your projects
@@ -1198,12 +1203,16 @@ Lets configure our favorite language. It's =go= by-the-way
        ;;nix               ; I hereby declare "nix geht mehr!"
        ;;ocaml             ; an objective camel
        (org
-        +gnuplot
         +dragndrop
+        +gnuplot
         +hugo
         +pomodoro
         +journal
+        +jupyter
         +pomodoro
+        +noter
+        +pandoc
+        +present
         ;;+pretty
         +roam)
        ;;php               ; perl's insecure younger brother
@@ -1214,7 +1223,7 @@ Lets configure our favorite language. It's =go= by-the-way
        ;;qt                ; the 'cutest' gui framework ever
        ;;racket            ; a DSL for DSLs
        ;;raku              ; the artist formerly known as perl6
-       ;;rest              ; Emacs as a REST client
+       rest              ; Emacs as a REST client
        ;;rst               ; ReST in peace
        ;;(ruby +rails)     ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
        ;;rust              ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
