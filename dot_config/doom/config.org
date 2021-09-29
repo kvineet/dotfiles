@@ -221,7 +221,7 @@ numbers are disabled. For relative line numbers, set this to `relative'.
 (eval-after-load 'org
   '(org-load-modules-maybe t))
 #+END_SRC
-** Org prettification
+** Org Prettification
 *** Enable =mixed-pitch-mode= automatically
 #+BEGIN_SRC emacs-lisp :tangle config.el
 (add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode)
