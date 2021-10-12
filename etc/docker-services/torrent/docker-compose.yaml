@@ -15,7 +15,7 @@ services:
       - SONARR_BRANCH=main
     image: docker.io/linuxserver/sonarr:latest
     labels:
-      - com.centurylinklabs.watchtower.enable=true
+      - io.containers.autoupdate=registry
       - com.docker.compose.service=sonarr
     logging:
       driver: json-file
@@ -44,7 +44,8 @@ services:
       - XDG_CONFIG_HOME=/config/xdg
     image: docker.io/linuxserver/radarr:latest
     labels:
-      - com.centurylinklabs.watchtower.enable=true
+      - io.containers.autoupdate=registry
+      - com.docker.compose.service=radarr
     logging:
       driver: json-file
       options: {}
@@ -73,7 +74,8 @@ services:
       - XDG_CONFIG_HOME=/config
     image: docker.io/linuxserver/jackett:latest
     labels:
-      - com.centurylinklabs.watchtower.enable=true
+      - io.containers.autoupdate=registry
+      - com.docker.compose.service=jackett
     logging:
       driver: json-file
       options: {}
@@ -97,7 +99,8 @@ services:
       - TERM=xterm
     image: registry.gitlab.com/engineerwolf/docker-transmission:latest
     labels:
-      - com.centurylinklabs.watchtower.enable=true
+      - io.containers.autoupdate=registry
+      - com.docker.compose.service=transmission
     logging:
       driver: json-file
       options: {}
