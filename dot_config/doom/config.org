@@ -1018,7 +1018,7 @@ enable the package after ledger-mode
 #+BEGIN_SRC emacs-lisp :tangle config.el
 (use-package! company-ledger-acct
   :after (ledger-mode)
-  :custom (company-ledger-acct-master-file (concat ledger-directory "epoch/_accounts.ledger"))
+  :custom (company-ledger-acct-master-file (concat (file-name-as-directory ledger-directory) "epoch/_accounts.ledger"))
   (company-ledger-acct-currency-symbol "₹"))
 
 (set-company-backend! 'ledger-mode 'company-ledger-acct 'company-yasnippet 'company-capf)
