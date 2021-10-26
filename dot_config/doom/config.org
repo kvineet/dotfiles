@@ -508,52 +508,15 @@ Enable caching of journal files, as we are using encryption.
 (setq org-journal-enable-cache t)
 #+END_SRC
 ** =org-roam=
-*** capture templates
+*** COMMENT capture templates
 #+BEGIN_SRC emacs-lisp :tangle config.el
-(setq org-roam-capture-templates '(("n" "Notes" plain (function org-roam--capture-get-point)
-                                    "* %? %(format-time-string (org-time-stamp-format t) (time-stamp))\n"
-                                    :file-name "notes/%<%Y%m%d%H%M%S>-${slug}"
-                                    :head "#+title: ${title}\n"
-                                    :unnarrowed t)
-                                   ("g" "Genealogy" plain (function org-roam--capture-get-point)
-                                    "%?"
-                                    :file-name "genealogy/%<%Y%m%d%H%M%S>-${slug}"
-                                    :head "#+title: ${title}\n#+category: ${title}"
-                                    :unnarrowed t)
-                                   ("p" "People" plain (function org-roam--capture-get-point)
-                                    "%?"
-                                    :file-name "people/%<%Y%m%d%H%M%S>-${slug}"
-                                    :head "#+title: ${title}\n"
-                                    :unnarrowed t)
-                                   ("r" "Receipe" plain (function org-roam--capture-get-point)
-                                    "%?"
-                                    :file-name "receipe/%<%Y%m%d%H%M%S>-${slug}"
-                                    :head "#+title: ${title}\n"
-                                    :unnarrowed t)
-                                   ("t" "Techincal" plain (function org-roam--capture-get-point)
-                                    "%?"
-                                    :file-name "technical/%<%Y%m%d%H%M%S>-${slug}"
-                                    :head "#+title: ${title}\n"
-                                    :unnarrowed t)
-                                   ("j" "Project" plain (function org-roam--capture-get-point)
-                                    "%?"
-                                    :file-name "project/%<%Y%m%d%H%M%S>-${slug}"
-                                    :head "#+title: ${title}\n"
-                                    :unnarrowed t)
-                                   ("w" "Worklog" plain (function org-roam--capture-get-point)
-                                    "* %?\n%(format-time-string (org-time-stamp-format t) (time-stamp))\n"
-                                    :file-name "worklog/%<%Y%m%d%H%M%S>-${slug}"
-                                    :head "#+title: ${title}\n"
-                                    :unnarrowed t)
-                                   ("o" "Other" plain (function org-roam--capture-get-point)
-                                    "%?"
-                                    :file-name "other/%<%Y%m%d%H%M%S>-${slug}"
-                                    :head "#+title: ${title}\n"
-                                    :unnarrowed t)))
 #+END_SRC
-*** TODO COMMENT daily templates
+*** TODO daily templates
 #+BEGIN_SRC emacs-lisp :tangle config.el
-
+(setq org-roam-dailies-capture-templates '(("d" "default" entry "* %<%I:%M %p>: %?"
+                                            :if-new (file+head "%<%Y-%m-%d>.org"
+                                                               "#+PROPERTY: res_dir ./static/images\n#+PROPERTY: header-args :tangle ./../../../accounting/daily/%<%Y-%m-%d>.ledger\n#+title: %<%Y-%m-%d>")
+                                                )))
 #+END_SRC
 *** COMMENT encryption
 #+BEGIN_SRC emacs-lisp :tangle config.el
