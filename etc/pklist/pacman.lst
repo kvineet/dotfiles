@@ -20,6 +20,7 @@ breeze-gtk
 btrfs-progs
 bzip2
 cabal-install
+calibre
 chromium
 cmake
 code
@@ -84,7 +85,6 @@ gsfonts
 gstreamer-vaapi
 gwenview
 gzip
-haskell-brittany
 haskell-hledger-lib
 haskell-hspec
 haskell-hspec-core
@@ -159,6 +159,7 @@ lib32-nvidia-utils
 libkleo
 libksysguard
 libldac
+libpamac-snap-plugin
 libreoffice-still
 libreoffice-still-mr
 libretro-bsnes-hd
@@ -176,18 +177,18 @@ linux510-broadcom-wl
 linux510-headers
 linux510-nvidia
 linux510-r8168
-linux513
-linux513-acpi_call
-linux513-broadcom-wl
-linux513-headers
-linux513-nvidia
-linux513-r8168
 linux514
 linux514-acpi_call
 linux514-broadcom-wl
 linux514-headers
 linux514-nvidia
 linux514-r8168
+linux515
+linux515-acpi_call
+linux515-broadcom-wl
+linux515-headers
+linux515-nvidia
+linux515-r8168
 logrotate
 lsb-release
 lsd
@@ -292,6 +293,8 @@ sed
 shadow
 shellcheck
 shotwell
+snapd
+snapd-glib
 spectacle
 spectre-meltdown-checker
 sqlitebrowser
@@ -360,6 +363,7 @@ xorg-xinit
 xournalpp
 yakuake
 yakuake-skin-maia
+yaml-language-server
 youtube-dl
 zathura
 zathura-cb
