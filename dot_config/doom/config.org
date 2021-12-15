@@ -465,7 +465,7 @@ Enable =org-sidebar=
 #+BEGIN_SRC emacs-lisp :tangle packages.el
 (package! org-sidebar)
 #+END_SRC
-** =org-journal= files
+** COMMENT =org-journal= files
 *** date formats
 I want the date format to be Day, date month year
 #+BEGIN_SRC emacs-lisp :tangle config.el
@@ -521,8 +521,31 @@ Enable caching of journal files, as we are using encryption.
                                                                "#+title: %<%A, %d %B %Y>")
                                             :unnarrowed t)))
 #+END_SRC
-*** COMMENT capture templates
+*** capture templates
 #+BEGIN_SRC emacs-lisp :tangle config.el
+(setq org-roam-capture-templates '(
+                                   ("d" "default" entry "* %?"
+                                    :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+                                    :unnarrowed t)
+                                   ("n" "Notes" entry
+                                    "* %? \n%(format-time-string (org-time-stamp-format t) (time-stamp))\n"
+                                    :target (file+head "notes/%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: :notes:\n#+date: %u\n")
+                                    :unnarrowed t)
+                                   ("w" "Work" entry
+                                    "* %?\n%(format-time-string (org-time-stamp-format t) (time-stamp))\n"
+                                    :target (file+datetree "worklog/%<%Y%m%d%H%M%S>-${slug}.org" month)
+                                    :unnarrowed t)
+                                   ))
+#+END_SRC
+*** =org-protocol= capture templates
+#+BEGIN_SRC emacs-lisp :tangle config.el
+(setq org-roam-capture-ref-templates
+      '(("r" "ref" plain "%?"
+         :if-new (file+head "literature/${slug}.org"
+                            "#+title: ${title}
+,#+roam_key: ${ref}")
+         :unnarrowed t
+         :immediate-finish t)))
 #+END_SRC
 *** build =org-agenda=
 **** =org-roam= nodes with @project tag
@@ -538,8 +561,12 @@ Enable caching of journal files, as we are using encryption.
            (org-roam-node-list))))
 (defun my/org-roam-refresh-agenda-list ()
   (interactive)
-  (setq org-agenda-files (my/org-roam-list-notes-by-tag "Project")))
+  (setq org-agenda-files (my/org-roam-list-notes-by-tag "project")))
 #+END_SRC
+
+#+RESULTS:
+: my/org-roam-refresh-agenda-list
+
 **** COMMENT TODO Add @project tag for files with #TODO items
 #+BEGIN_SRC emacs-lisp :tangle config.el
 (add-hook 'find-file-hook #'vulpea-project-update-tag)
@@ -1226,9 +1253,9 @@ Lets configure our favorite language. It's =go= by-the-way
        (org
         +dragndrop
         +gnuplot
-        +hugo
+        ;+hugo
         +pomodoro
-        +journal
+        ;;+journal
         +jupyter
         +pomodoro
         +noter
