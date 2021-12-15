@@ -1,33 +1,33 @@
-{{ if (eq .chezmoi.hostname "kvineet-pc") -}}#!/usr/bin/env bash
-if (! command -v podman-compose > /dev/null) || (! command -v podman > /dev/null); then
-    echo "podman and podman-compose required..."
-    exit 1
-fi
-echo "generating podman config..."
+#!/usr/bin/env bash
+{{ if (eq .chezmoi.hostname "kvineet-pc") -}}
+{{ template "sh-req-command" "podman" -}}
+{{ template "sh-req-command" "podman-compose" -}}
+{{ template "info" -}}
+printf "generating pods\n"
 # For each  service
 #  - start pod using podman-compose
 #  - generate systemd units
 {{ if (has "emby" .podman ) -}}
 if ! sudo podman pod exists emby; then
-    sudo podman-compose -f {{ joinPath .chezmoi.sourceDir "etc/docker-services/emby/docker-compose.yaml" | quote }} up -d
+    sudo podman-compose -f {{ joinPath .chezmoi.sourceDir "etc/docker-services/emby/docker-compose.yaml" | quote }} -t 1podfw up -d
 fi
 sudo podman generate systemd --files --name emby
 {{ end -}}
 {{ if (has "torrent" .podman) }}
 if ! sudo podman pod exists torrent; then
-    sudo podman-compose -f {{ joinPath .chezmoi.sourceDir "etc/docker-services/torrent/docker-compose.yaml" | quote }} up -d
+    sudo podman-compose -f {{ joinPath .chezmoi.sourceDir "etc/docker-services/torrent/docker-compose.yaml" | quote }} -t 1podfw up -d
 fi
 sudo podman generate systemd --files --name torrent
 {{ end -}}
 {{ if (has "plex" .podman) }}
 if ! sudo podman pod exists plex; then
-    sudo podman-compose -f {{ joinPath .chezmoi.sourceDir "etc/docker-services/plex/docker-compose.yaml" | quote }} up -d
+    sudo podman-compose -f {{ joinPath .chezmoi.sourceDir "etc/docker-services/plex/docker-compose.yaml" | quote }} -t 1podfw up -d
 fi
 sudo podman generate systemd --files --name plex
 {{ end -}}
 {{ if (has "webDav" .podman) }}
 if ! sudo podman pod exists webdav; then
-    sudo podman-compose -f {{ joinPath .chezmoi.sourceDir "etc/docker-services/webdav/docker-compose.yaml" | quote }} up -d
+    sudo podman-compose -f {{ joinPath .chezmoi.sourceDir "etc/docker-services/webdav/docker-compose.yaml" | quote }} -t 1podfw up -d
 fi
 sudo podman generate systemd --files --name webdav
 {{ end -}}
