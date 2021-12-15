@@ -99,6 +99,12 @@ I have plenty of disk space, this is stupid default. It also breaks every-time.
 #+BEGIN_SRC emacs-lisp :tangle config.el
 (setq ivy-read-action-function #'ivy-hydra-read-action)
 #+END_SRC
+** =java= version should be lower for =lsp=
+#+BEGIN_SRC emacs-lisp :tangle config.el
+(setq lsp-java-configuration-runtimes '[(:name "JavaSE-8"
+                                                 :path "/usr/lib/jvm/java-8-openjdk/"
+                                                 :default t)])
+#+END_SRC
 * Prettification
 ** Font Configuration
 Doom exposes five (optional) variables for controlling fonts in Doom. Here
