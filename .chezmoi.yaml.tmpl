@@ -6,9 +6,9 @@ data:
   zsh:
     prompt: p10k # possible values starship, p10k
   xdg:
-    config: $HOME/.config
-    cache: $HOME/.cache
-    data: $HOME/.local/share
+    config: {{ joinPath .chezmoi.homeDir ".config" }}
+    cache: {{ joinPath .chezmoi.homeDir ".cache" }}
+    data: {{ joinPath .chezmoi.homeDir ".local/share" }}
   tools:
     - --
 {{- if (contains "nuance" .chezmoi.fqdnHostname) }}
