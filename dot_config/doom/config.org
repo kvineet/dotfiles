@@ -36,6 +36,22 @@ creates source block for =init.el=, while =srcdp= snippet creates source block f
 (setq user-mail-address "mail@kvineet.in")
 #+END_SRC
 * Files and Directories
+** vault
+#+BEGIN_SRC emacs-lisp :tangle config.el
+(setq vault-directory
+      (concat
+       (file-name-as-directory
+        (concat
+         (file-name-as-directory (getenv "HOME"))
+         "Vaults")
+        )
+       "OneDriveVault")
+      )
+#+END_SRC
+
+#+RESULTS:
+: /home/kvineet/Vaults/OneDriveVault
+
 ** Org
 Define paths related to org files.
 #+BEGIN_SRC emacs-lisp :tangle config.el
@@ -46,13 +62,15 @@ Define paths related to org files.
                                         (concat (file-name-as-directory
                                                  (concat (file-name-as-directory (getenv "HOME")) "..")) "..")) "Sync")) "org"))
                      (IS-LINUX
-                      (concat (file-name-as-directory
-                               (concat (file-name-as-directory (getenv "HOME")) "Sync")) "org"))
+                      (concat (file-name-as-directory vault-directory) "org"))
                      (t
-                      (concat (file-name-as-directory
-                               (concat (file-name-as-directory (getenv "HOME")) "Sync")) "org"))
+                      (concat (file-name-as-directory vault-directory) "org"))
                      ))
 #+END_SRC
+
+#+RESULTS:
+: /home/kvineet/Vaults/OneDriveVault/org
+
 *** =org-roam= directory
 #+BEGIN_SRC emacs-lisp :tangle config.el
 (setq org-roam-directory (concat (file-name-as-directory org-directory) "roam"))
@@ -74,9 +92,12 @@ Define paths related to org files.
 ** ledger
 #+BEGIN_SRC emacs-lisp :tangle config.el
 (setq ledger-directory
-      (concat (file-name-as-directory
-               (concat (file-name-as-directory (getenv "HOME")) "Sync")) "accounting"))
+      (concat (file-name-as-directory vault-directory) "accounting"))
 #+END_SRC
+
+#+RESULTS:
+: /home/kvineet/Vaults/OneDriveVault/accounting
+
 ** leetcode
 #+BEGIN_SRC emacs-lisp :tangle config.el
 (setq leetcode-directory
