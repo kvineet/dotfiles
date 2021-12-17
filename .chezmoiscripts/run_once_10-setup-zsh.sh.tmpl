@@ -2,14 +2,14 @@
 {{- if (eq .shell "zsh") }}
 {{ template "sh-req-command" "chezmoi" -}}
 {{ template "info" -}}
-printf " Creating"
+printf " Creating "
 {{ template "emph" "/etc/zsh/zshenv" -}}
 printf " from template\n"
 sudo mkdir -p /etc/zsh
 chezmoi execute-template < {{ joinPath .chezmoi.sourceDir "etc/zsh_zshenv" | quote }} | sudo tee /etc/zsh/zshenv > /dev/null
 
 {{ template "info" -}}
-printf " Installing"
+printf " Installing "
 {{ template "emph" "zinit" -}}
 printf "\n"
 if [[ ! -f {{.xdg.data}}/zinit/bin/zinit.zsh ]]; then
@@ -17,7 +17,7 @@ if [[ ! -f {{.xdg.data}}/zinit/bin/zinit.zsh ]]; then
 fi
 
 {{ template "info" -}}
-printf " Changing user default shell to"
+printf " Changing user default shell to "
 {{ template "emph" "zsh" -}}
 printf "\n"
 chsh -s /bin/zsh
