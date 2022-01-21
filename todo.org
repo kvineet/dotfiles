@@ -4,3 +4,8 @@
 - [ ] dot_ssh\config.tmpl added to project
 - [ ] configuration for separate identities and SVN providers gets generated
 - [ ] configuration is not visible in plain text in public repo
+
+** TODO [#A] Use [[https://github.com/romkatv/zsh-defer][zsh-defer]], get rid of zinit
+acceptance:
+[ ] All plugins are sourced using zsh inbuilt and chezmoi
+[ ] slow plugins are loaded using =zsh-defer=.
