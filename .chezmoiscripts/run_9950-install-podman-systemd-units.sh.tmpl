@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+{{ if hasKey . "podman" }}
 {{ if (eq .chezmoi.hostname "kvineet-pc") -}}
 {{ template "sh-req-command" "podman" -}}
 {{ template "sh-req-command" "podman-compose" -}}
@@ -7,48 +8,22 @@ printf "generating pods\n"
 # For each  service
 #  - start pod using podman-compose
 #  - generate systemd units
-{{ if (has "emby" .podman ) -}}
-if ! sudo podman pod exists emby; then
-    sudo podman-compose -f {{ joinPath .chezmoi.sourceDir "etc/docker-services/emby/docker-compose.yaml" | quote }} -t 1podfw up -d
+{{ range $service := .podman -}}
+if ! sudo podman pod exists {{ $service }}; then
+    sudo podman play kube {{ joinPath $.chezmoi.sourceDir "etc/pods/" $service (cat $service "-pod.yaml" | nospace) | quote }}
 fi
-sudo podman generate systemd --files --name emby
 {{ end -}}
-{{ if (has "torrent" .podman) }}
-if ! sudo podman pod exists torrent; then
-    sudo podman-compose -f {{ joinPath .chezmoi.sourceDir "etc/docker-services/torrent/docker-compose.yaml" | quote }} -t 1podfw up -d
-fi
-sudo podman generate systemd --files --name torrent
+{{ range $service := .podman -}}
+ sudo podman generate systemd --files --name {{$service}}
 {{ end -}}
-{{ if (has "plex" .podman) }}
-if ! sudo podman pod exists plex; then
-    sudo podman-compose -f {{ joinPath .chezmoi.sourceDir "etc/docker-services/plex/docker-compose.yaml" | quote }} -t 1podfw up -d
-fi
-sudo podman generate systemd --files --name plex
-{{ end -}}
-{{ if (has "webDav" .podman) }}
-if ! sudo podman pod exists webdav; then
-    sudo podman-compose -f {{ joinPath .chezmoi.sourceDir "etc/docker-services/webdav/docker-compose.yaml" | quote }} -t 1podfw up -d
-fi
-sudo podman generate systemd --files --name webdav
-{{ end -}}
-
 # Copy service files to systemd units folder
 sudo mv *.service /etc/systemd/system/
 # Reload daemon to load new unit files
 sudo systemctl daemon-reload
 # enable services
-{{ if (has "emby" .podman ) -}}
-sudo systemctl enable pod-emby
+{{ range $service := .podman -}}
+sudo systemctl enable pod-{{$service}}
 {{ end -}}
-{{ if (has "torrent" .podman ) -}}
-sudo systemctl enable pod-torrent
-{{ end -}}
-{{ if (has "plex" .podman ) -}}
-sudo systemctl enable pod-plex
-{{ end -}}
-{{ if (has "webDav" .podman ) -}}
-sudo systemctl enable pod-webdav
-{{ end -}}
-
 #  LocalWords:  webDav
+{{ end -}}
 {{ end -}}

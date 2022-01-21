@@ -1,0 +1,164 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: torrent
+  name: torrent
+spec:
+  containers:
+    # Create the first container: Dummy identd server on 113/TCP
+    - name: sonarr-server
+      image: docker.io/linuxserver/sonarr:latest
+      env:
+        - name: TZ
+          value: "Asia/Kolkata"
+        - name: PUID
+          value: 1000
+        - name: PGID
+          value: 1000
+        - name: PATH
+          value: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+        - name: HOME
+          value: /root
+        - name: LANGUAGE
+          value: en_US.UTF-8
+        - name: LANG
+          value: en_US.UTF-8
+        - name: TERM
+          value: xterm
+        - name: XDG_CONFIG_HOME
+          value: /config/xdg
+        - name: SONARR_BRANCH
+          value: main
+      ports:
+        - containerPort: 8989
+          hostPort: 13378
+          protocol: tcp
+      volumeMounts:
+        - mountPath: /config
+          name: sonarr-config
+        - mountPath: /downloads
+          name: downloads
+        - mountPath: /tv
+          name: webdav
+    - name: radarr-server
+      image: docker.io/linuxserver/radarr:latest
+      env:
+        - name: TZ
+          value: "Asia/Kolkata"
+        - name: PUID
+          value: 1000
+        - name: PGID
+          value: 1000
+        - name: PATH
+          value: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+        - name: HOME
+          value: /root
+        - name: LANGUAGE
+          value: en_US.UTF-8
+        - name: LANG
+          value: en_US.UTF-8
+        - name: TERM
+          value: xterm
+        - name: XDG_CONFIG_HOME
+          value: /config/xdg
+      ports:
+        - containerPort: 7878
+          hostPort: 13379
+          protocol: tcp
+      volumeMounts:
+        - mountPath: /config
+          name: radarr-config
+        - mountPath: /downloads
+          name: downloads
+        - mountPath: /movies
+          name: webdav
+    - name: jackett-server
+      image: docker.io/linuxserver/jackett:latest
+      env:
+        - name: TZ
+          value: "Asia/Kolkata"
+        - name: PUID
+          value: 1000
+        - name: PGID
+          value: 1000
+        - name: PATH
+          value: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+        - name: HOME
+          value: /root
+        - name: LANGUAGE
+          value: en_US.UTF-8
+        - name: LANG
+          value: en_US.UTF-8
+        - name: TERM
+          value: xterm
+        - name: XDG_DATA_HOME
+          value: /config
+        - name: XDG_CONFIG_HOME
+          value: /config
+      ports:
+        - containerPort: 9117
+          hostPort: 13370
+          protocol: tcp
+      volumeMounts:
+        - mountPath: /config
+          name: jackett-config
+        - mountPath: /downloads
+          name: torrent-watch
+    - name: transmission-server
+      image: registry.gitlab.com/engineerwolf/docker-transmission:latest
+      env:
+        - name: TZ
+          value: "Asia/Kolkata"
+        - name: PUID
+          value: 1000
+        - name: PGID
+          value: 1000
+        - name: PATH
+          value: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+        - name: HOME
+          value: /root
+        - name: TERM
+          value: xterm
+      ports:
+        - containerPort: 51413
+          hostPort: 52267
+          protocol: tcp
+        - containerPort: 9091
+          hostPort: 13371
+          protocol: tcp
+      volumeMounts:
+        - mountPath: /config
+          name: transmission-config
+        - mountPath: /downloads
+          name: downloads
+  restartPolicy: unless-stopped
+  volumes:
+    - name: downloads
+      hostPath:
+        path: /home/kvineet/Downloads/torrents
+        type: Directory
+    - name: torrent-watch
+      hostPath:
+        path: /home/kvineet/Downloads/torrents/watch
+        type: Directory
+    - name: sonarr-config
+      hostPath:
+        path: /home/kvineet/.config/torrent/sonarr
+        type: Directory
+    - name: radarr-config
+      hostPath:
+        path: /home/kvineet/.config/torrent/radarr
+        type: Directory
+    - name: jackett-config
+      hostPath:
+        path: /home/kvineet/.config/torrent/jackett
+        type: Directory
+    - name: transmission-config
+      hostPath:
+        path: /home/kvineet/.config/torrent/transmission
+        type: Directory
+    - name: webdav
+      hostPath:
+        path: /srv/webDav
+        type: Directory

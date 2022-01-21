@@ -1,0 +1,66 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: plex
+  name: plex
+spec:
+  containers:
+    # Create the first container: Dummy identd server on 113/TCP
+    - name: plex-server
+      image: ghcr.io/linuxserver/plex:latest
+      env:
+        - name: UID
+          value: 1000
+        - name: GID
+          value: 1000
+        - name: PUID
+          value: 1000
+        - name: PGID
+          value: 1000
+        - name: GIDLIST
+          value: 1000
+        - name: VERSION
+          value: docker
+        - name: PLEX_CLAIM
+          value: claim-Af5k8isp94YA2Wrs4BeE
+        - name: PATH
+          value: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+        - name: LANG
+          value: en_US.UTF-8
+        - name: AMDGPU_IDS
+          value: /share/libdrm/amdgpu.ids
+        - name: LD_LIBRARY_PATH
+          value: /lib:/system
+        - name: LIBVA_DRIVERS_PATH
+          value: /lib/dri
+        - name: OCL_ICD_VENDORS
+          value: /etc/OpenCL/vendors
+        - name: PCI_IDS_PATH
+          value: /share/hwdata/pci.ids
+        - name: SSL_CERT_FILE
+          value: /etc/ssl/certs/ca-certificates.crt
+        - name: NVIDIA_VISIBLE_DEVICES
+          value: all
+        - name: NVIDIA_DRIVER_CAPABILITIES
+          value: compute,video,utility
+      ports:
+        - containerPort: 32400
+          hostPort: 13387
+          protocol: TCP
+      volumeMounts:
+        - mountPath: /mnt/share1
+          name: content
+        - mountPath: /config
+          name: config
+      workingDir: /
+  restartPolicy: unless-stopped
+  volumes:
+    - name: content
+      hostPath:
+        path: /srv/webDav
+        type: Directory
+    - name: config
+      hostPath:
+        path: /media/Media/plex
+        type: Directory
