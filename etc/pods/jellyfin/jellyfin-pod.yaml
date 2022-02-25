@@ -2,13 +2,13 @@ apiVersion: v1
 kind: Pod
 metadata:
   labels:
-    app: emby
-  name: emby
+    app: jellyfin
+  name: jellyfin
 spec:
   containers:
     # Create the first container: Dummy identd server on 113/TCP
-    - name: emby-server
-      image: docker.io/emby/embyserver:latest
+    - name: jellyfin-server
+      image: docker.io/linuxserver/jellyfin:latest
       env:
         - name: UID
           value: 1000
@@ -43,10 +43,16 @@ spec:
       # Ensure not to overlap other 'containerPort' values within this pod
       ports:
         - containerPort: 8096
-          hostPort: 13386
+          hostPort: 13385
           protocol: TCP
+        - containerPort: 7359
+          hostPort: 7359
+          protocol: UDP
+        - containerPort: 1900
+          hostPort: 1900
+          protocol: UDP
       volumeMounts:
-        - mountPath: /mnt/share1
+        - mountPath: /data/content
           name: content
         - mountPath: /config
           name: config
@@ -59,5 +65,5 @@ spec:
         type: Directory
     - name: config
       hostPath:
-        path: /media/Media/Emby
+        path: /media/Media/Jellyfin
         type: Directory

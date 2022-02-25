@@ -2,13 +2,13 @@ apiVersion: v1
 kind: Pod
 metadata:
   labels:
-    app: emby
-  name: emby
+    app: shoko
+  name: shoko
 spec:
   containers:
     # Create the first container: Dummy identd server on 113/TCP
-    - name: emby-server
-      image: docker.io/emby/embyserver:latest
+    - name: shoko-server
+      image: docker.io/shokoanime/server:latest
       env:
         - name: UID
           value: 1000
@@ -42,22 +42,28 @@ spec:
           value: compute,utility
       # Ensure not to overlap other 'containerPort' values within this pod
       ports:
-        - containerPort: 8096
-          hostPort: 13386
+        - containerPort: 8111
+          hostPort: 13377
           protocol: TCP
       volumeMounts:
-        - mountPath: /mnt/share1
+        - mountPath: /data/content
           name: content
+        - mountPath: /data/import
+          name: import
         - mountPath: /config
           name: config
-      workingDir: /
+      workingDir: /home/shoko/.shoko
   restartPolicy: unless-stopped
   volumes:
     - name: content
       hostPath:
         path: /srv/webDav
         type: Directory
+    - name: import
+      hostPath:
+        path: /home/kvineet/Downloads/torrents
+        type: Directory
     - name: config
       hostPath:
-        path: /media/Media/Emby
+        path: /media/Media/Shoko
         type: Directory
