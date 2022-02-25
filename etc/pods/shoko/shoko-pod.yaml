@@ -50,9 +50,9 @@ spec:
           name: content
         - mountPath: /data/import
           name: import
-        - mountPath: /config
+        - mountPath: /home/shoko/.shoko
           name: config
-      workingDir: /home/shoko/.shoko
+      workingDir: /home/shoko/
   restartPolicy: unless-stopped
   volumes:
     - name: content

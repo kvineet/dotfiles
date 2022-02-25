@@ -26,7 +26,6 @@ data:
     - azcli
 {{ end }}
   podman:
-  - --
 {{- if (contains "pc" .chezmoi.fqdnHostname) }}
   - emby
   - torrent
