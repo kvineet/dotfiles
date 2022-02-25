@@ -53,6 +53,7 @@ elisa
 emacs
 encfs
 ethtool
+evince
 exfat-utils
 f2fs-tools
 fd
@@ -122,6 +123,7 @@ jdk11-openjdk
 jfsutils
 jq
 kactivitymanagerd
+kalendar
 kate
 kcm-wacomtablet
 kcolorpicker
