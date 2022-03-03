@@ -22,6 +22,7 @@ bzip2
 cabal-install
 calibre
 chromium
+clinfo
 cmake
 code
 coreutils
@@ -129,7 +130,6 @@ kcm-wacomtablet
 kcolorpicker
 kde-cli-tools
 kde-gtk-config
-kde-servicemenus-rootactions
 kdeconnect
 kdecoration
 kdenlive
