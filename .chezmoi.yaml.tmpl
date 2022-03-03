@@ -27,9 +27,7 @@ data:
 {{ end }}
   podman:
 {{- if (contains "pc" .chezmoi.fqdnHostname) }}
-  - emby
   - torrent
-  - plex
   - webDav
   - jellyfin
   - shoko

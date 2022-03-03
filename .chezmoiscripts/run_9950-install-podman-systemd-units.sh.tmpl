@@ -13,9 +13,21 @@ if ! sudo podman pod exists {{ $service }}; then
     sudo podman play kube {{ joinPath $.chezmoi.sourceDir "etc/pods/" $service (cat $service "-pod.yaml" | nospace) | quote }}
 fi
 {{ end -}}
+{{ template "info" -}}
+printf "removing previous systemd unit files\n"
+if test -n "$(find /etc/systemd/system -maxdepth 1 -name 'container-*' -print -quit)"; then
+    sudo rm /etc/systemd/system/container-*
+fi
+if test -n "$(find /etc/systemd/system -maxdepth 1 -name 'pod-*' -print -quit)"; then
+    sudo rm /etc/systemd/system/pod-*
+fi
+{{ template "info" -}}
+printf "generating new systemd unit files\n"
 {{ range $service := .podman -}}
  sudo podman generate systemd --files --name {{$service}}
 {{ end -}}
+{{ template "info" -}}
+printf "installing systemd units\n"
 # Copy service files to systemd units folder
 sudo mv *.service /etc/systemd/system/
 # Reload daemon to load new unit files
