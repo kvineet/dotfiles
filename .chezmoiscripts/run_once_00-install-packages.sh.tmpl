@@ -2,11 +2,11 @@
 {{ if (eq .chezmoi.osRelease.id "manjaro") -}}
 {{ template "info" -}}
 printf "Installing packages from backup list.\n"
-  {{- if ( contains "WSL" .chezmoi.kernel.osrelease) -}}
-  sudo pacman -Syu --noconfirm --needed - < {{ joinPath .chezmoi.sourceDir "etc/pklist/pacman.wsl.lst" }}
-  {{- else -}}
-  sudo pacman -Syu --noconfirm --needed - < {{ joinPath .chezmoi.sourceDir "etc/pklist/pacman.lst" }}
-  {{- end -}}
-{{ else if (eq .chezmoi.osRelease.id "ubuntu") -}}
+{{- if ( contains "WSL" .chezmoi.kernel.osrelease) }}
+sudo pacman -Syu --noconfirm --needed - < {{ joinPath .chezmoi.sourceDir "etc/pklist/pacman.wsl.lst" }}
+{{- else }}
+sudo pacman -Syu --noconfirm --needed - < {{ joinPath .chezmoi.sourceDir "etc/pklist/pacman.lst" }}
+{{- end -}}
+{{ else if (eq .chezmoi.osRelease.id "ubuntu") }}
 # TODO install same packages
 {{- end }}
