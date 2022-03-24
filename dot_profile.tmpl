@@ -19,4 +19,5 @@ if test -d {{ joinPath .xdg.config "profile.d" }}; then
 fi
 
 appendpath "${GOPATH}/bin"
+appendpath {{ joinPath .xdg.data "/krew/bin" | quote }}
 unset -f appendpath

@@ -33,6 +33,6 @@ export RUSTUP_HOME={{ joinPath .xdg.data "/rustup" | quote }}
 export WGETRC={{ joinPath .xdg.config "/wgetrc" | quote }}
 export WINEPREFIX={{ joinPath .xdg.data "/wineprefixes/default" | quote }}
 export WORKON_HOME={{ joinPath .xdg.data "/virtualenv/" | quote }}
-
+export KREW_ROOT={{ joinPath .xdg.data "/krew" | quote }}
 # Does not work with SDDM/KDE Plasma
 # export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
