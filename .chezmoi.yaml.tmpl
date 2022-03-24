@@ -19,11 +19,26 @@ data:
     config: {{ joinPath .chezmoi.homeDir ".config" }}
     cache: {{ joinPath .chezmoi.homeDir ".cache" }}
     data: {{ joinPath .chezmoi.homeDir ".local/share" }}
-  tools:
-    - --
 {{- if (contains "nuance" .chezmoi.fqdnHostname) }}
-    - kubectl
+  tools:
     - azcli
+  kubectl:
+    - allctx
+    - ctx
+    - debug-shell
+    - deprecations
+    - doctor
+    - emit-event
+    - explore
+    - fuzzy
+    - kurt
+    - modify-secret
+    - multiforward
+    - ns
+    - pod-lens
+    - restart
+    - roll
+    - who-can
 {{ end }}
   podman:
 {{- if (contains "pc" .chezmoi.fqdnHostname) }}
