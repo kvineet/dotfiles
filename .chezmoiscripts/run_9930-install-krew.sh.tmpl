@@ -1,5 +1,10 @@
 #!/usr/bin/env sh
 {{- if index . "kubectl" }}
+lastUpdated={{ .lastupdated.krewplugins }}
+duration={{ .update.interval }}
+{{ template "sh-last-updated" .chezmoi.sourceFile }}
+[[ $skip -eq 1 ]] && exit 0
+
 if ! command -v kubectl &> /dev/null; then
   {{ template "skip" -}}
   {{ template "emph" "kubectl" -}}
@@ -18,4 +23,9 @@ export KREW_ROOT={{ joinPath .xdg.data "/krew" | quote }}
 )
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 kubectl krew install {{ .kubectl | join " " }}  
+
+{{ template "sh-opt-command" "yq" -}}
+if command yq &> /dev/null; then
+yq e -i '.data.lastupdated.krewplugins = {{ now | unixEpoch }}' {{ joinPath .xdg.config "chezmoi/chezmoi.yaml"}}
+fi
 {{- end -}}
