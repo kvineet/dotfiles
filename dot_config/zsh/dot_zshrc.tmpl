@@ -46,6 +46,7 @@ source {{ joinPath .xdg.data "/zinit/zinit.git/zinit.zsh" | quote }}
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
+
 # Load a few important annexes, without Turbo
 # (this is currently required for annexes)
 zinit light-mode for \
@@ -58,8 +59,8 @@ zinit light-mode for \
 
 {{ if (eq .zsh.prompt "starship") }}
 zinit ice as"command" from"gh-r" \
-    atclone"./starship init zsh > init.zsh; ./starship completions zsh > _starship" \
-    atpull"%atclone" src"init.zsh"
+   atclone"./starship init zsh > init.zsh; ./starship completions zsh > _starship" \
+   atpull"%atclone" src"init.zsh"
 zinit light starship/starship
 {{ else if (eq .zsh.prompt "p10k") }}
 zinit ice depth=1
@@ -89,20 +90,24 @@ zstyle :plugin:zsh-completion-generator programs   aspell emacs ggrep tr cat leg
 zinit ice from"gh-r" as"program" mv"docker* -> docker-compose" bpick"*linux*"
 zinit light docker/compose
 
-zinit light-mode lucid wait has"kubectl" for \
-  id-as"kubectl_completion" \
-  as"completion" \
-  atclone"kubectl completion zsh > _kubectl" \
-  atpull"%atclone" \
-  run-atpull \
-  zdharma-continuum/null
+zinit ice \
+    as"completion" \
+    id-as"kubectl-completion" \
+    has"kubectl" \
+    atclone"kubectl completion zsh > _kubectl" \
+    atpull"%atclone" \
+    nocompile
+zinit light zdharma-continuum/null
 
-zinit ice from"gh-r" as"program" \
-  mv"octant*/octant -> octant" \
-  bpick"*Linux-64bit*" \
-  atclone"octant completion zsh > _octant" \
-  atpull"%atclone"
-zinit light vmware-tanzu/octant
+zi for \
+    as"program" \
+    atclone"./octant completion zsh > _octant" \
+    from"gh-r" \
+    light-mode \
+    mv"octant*/octant -> octant" \
+    bpick"*Linux-64bit*" \
+    src'_octant' \
+    vmware-tanzu/octant
 
 zinit as"null" wait"1" lucid for \
     sbin    Fakerr/git-recall \
@@ -110,7 +115,7 @@ zinit as"null" wait"1" lucid for \
     sbin    paulirish/git-recent \
     sbin    davidosomething/git-my \
     sbin atload"export _MENU_THEME=legacy" \
-  	    arzzen/git-quick-stats \
+            arzzen/git-quick-stats \
     sbin    iwata/git-now \
     make"PREFIX=$ZPFX install" \
     tj/git-extras
@@ -140,7 +145,7 @@ zinit light-mode lucid wait has"chezmoi" for \
 zinit light-mode lucid wait has"yq" for \
   id-as"yq_completion" \
   as"completion" \
-  atclone"yq completion zsh > _yq" \
+  atclone"yq shell-completion zsh > _yq_completion" \
   atpull"%atclone" \
   run-atpull \
   zdharma-continuum/null
