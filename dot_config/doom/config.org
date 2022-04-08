@@ -970,6 +970,17 @@ lets configure it.
                            :order 90)
                           (:discard (:tag ("Chore" "Routine" "Daily")))))))))))
 #+END_SRC
+** export to JIRA markdown
+=ox-jira= to export in Jira markup format.
+#+BEGIN_SRC emacs-lisp :tangle packages.el
+(package! ox-jira)
+#+END_SRC
+We enable the package after =org-mode= is loaded
+#+BEGIN_SRC emacs-lisp :tangle config.el
+(use-package! ox-jira
+  :after org)
+
+#+END_SRC
 * =org-roam=
 ** helper functions
 *** add property for dailies
