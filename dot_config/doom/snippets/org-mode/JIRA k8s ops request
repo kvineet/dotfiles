@@ -1,0 +1,34 @@
+# -*- mode: snippet -*-
+# name: JIRA k8s ops request
+# uuid:
+# key: ,k8s
+# condition: t
+# --
+
+1. Execute steps described in [[https://wiki.nuancehce.com/display/CAS/Controller+upgrade+guide][Controller upgrade Guide]]
+   *Branch*: ${1:`(format-time-string "%Y-%m-%d")`}-CTRL
+   | Region         | Cluster         |
+   |----------------+-----------------|
+   | US east        | ueclu-${3:$(substring yas-text 0 1)}kub001   |
+   | Canada East    | ceclu-${3:$(substring yas-text 0 1)}gnaks001 |
+   | Australia East | zeclu-${3:$(substring yas-text 0 1)}gnaks001 |
+
+2. Execute steps described in [[https://wiki.nuancehce.com/display/CAS/Upgrading+containerized+environment+with+new+pipelines][Upgrading containerized environment with new pipelines]]
+| Variable                                         | Value                                       |
+|--------------------------------------------------+---------------------------------------------|
+| Branch                                           | $1-${2:$$(yas-choose-value '("MUS" "ASR"))} |
+| Azure service connection name for build pipeline | HC-Clintegrity-CLU-Dev                      |
+| Azure container registry name                    | uecludgnacr                                 |
+
+Clusters
+| Region    | Subscription                 | Cluster                                      | namespace                                        |
+|-----------+------------------------------+----------------------------------------------+--------------------------------------------------|
+| US        | HC-Clintegrity-CLU-Prod      | ueclu-${3:$(substring yas-text 0 1)}kub001   |                                                  |
+|           |                              |                                              | muse-${3:$$(yas-choose-value '("stage" "prod"))} |
+|           |                              |                                              | assure-$3                                        |
+|           |                              |                                              | assure-mpower-$3                                 |
+| Canada    | HC-Clintegrity-CLU-Canada    | ceclu-${3:$(substring yas-text 0 1)}gnaks001 |                                                  |
+|           |                              |                                              | assure-ca$3                                      |
+| Australia | HC-Clintegrity-CLU-Australia | zeclu-${3:$(substring yas-text 0 1)}gnaks001 |                                                  |
+|           |                              |                                              | assure-ze$3                                      |
+|           |                              |                                              | assure-mpower-ze$3                               |
