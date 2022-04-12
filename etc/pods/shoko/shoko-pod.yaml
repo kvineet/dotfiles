@@ -3,6 +3,7 @@ kind: Pod
 metadata:
   labels:
     app: shoko
+    io.containers.autoupdate: image
   name: shoko
 spec:
   containers:

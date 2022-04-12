@@ -3,6 +3,7 @@ kind: Pod
 metadata:
   labels:
     app: jellyfin
+    io.containers.autoupdate: image
   name: jellyfin
 spec:
   containers:

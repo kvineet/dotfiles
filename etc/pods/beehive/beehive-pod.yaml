@@ -3,6 +3,7 @@ kind: Pod
 metadata:
   labels:
     app: beehive
+    io.containers.autoupdate: image
   name: beehive
 spec:
   containers:
