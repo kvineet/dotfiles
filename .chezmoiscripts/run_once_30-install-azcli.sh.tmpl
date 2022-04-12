@@ -1,8 +1,9 @@
 #!/usr/bin/env sh
-{{- if (has "azcli" .tools) }}
-
+{{- if index . "tools" }}
+{{- if has "azcli" .tools }}
 if ! command -v az &> /dev/null; then
 	curl -L https://aka.ms/InstallAzureCli | bash
 	az config set auto-upgrade.enable=yes
 fi
+{{- end }}
 {{- end }}
