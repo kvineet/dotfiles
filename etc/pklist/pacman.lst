@@ -27,7 +27,6 @@ cmake
 code
 coreutils
 cpupower
-crda
 cronie
 cryfs
 cryptsetup
@@ -114,6 +113,7 @@ imagewriter
 imath
 inetutils
 intel-ucode
+inxi
 iproute2
 iptables
 iputils
@@ -194,6 +194,10 @@ linux516-broadcom-wl
 linux516-headers
 linux516-nvidia-470xx
 linux516-r8168
+linux517
+linux517-acpi_call
+linux517-headers
+linux517-nvidia-470xx
 logrotate
 lsb-release
 lsd
@@ -223,7 +227,6 @@ mhwd-db
 milou
 mkinitcpio-openswap
 mpv
-mpv-mpris
 mythes-en
 nano
 neofetch
@@ -243,6 +246,7 @@ nvidia-470xx-utils
 obs-studio
 offlineimap
 okular
+opendoas
 openjdk11-doc
 openjdk11-src
 openttd
@@ -356,7 +360,9 @@ weston
 wget
 which
 whois
-wine-staging
+wine
+wine-gecko
+wine-mono
 winetricks
 wpa_supplicant
 xclip
