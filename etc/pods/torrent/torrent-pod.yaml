@@ -3,6 +3,7 @@ kind: Pod
 metadata:
   labels:
     app: torrent
+    io.containers.autoupdate: image
   name: torrent
 spec:
   containers:
