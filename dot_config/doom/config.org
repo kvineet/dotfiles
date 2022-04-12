@@ -114,10 +114,6 @@ I have plenty of disk space, this is stupid default. It also breaks every-time.
 #+BEGIN_SRC emacs-lisp :tangle config.el
 (setq undo-fu-session-compression nil)
 #+END_SRC
-** COMMENT hydra is better for =read-action=
-#+BEGIN_SRC emacs-lisp :tangle config.el
-(setq ivy-read-action-function #'ivy-hydra-read-action)
-#+END_SRC
 ** =java= version should be lower for =lsp=
 #+BEGIN_SRC emacs-lisp :tangle config.el
 (setq lsp-java-configuration-runtimes '[(:name "JavaSE-8"
@@ -125,11 +121,15 @@ I have plenty of disk space, this is stupid default. It also breaks every-time.
                                                  :default t)])
 #+END_SRC
 ** =org-roam= dailies directory
-=org-roam= behaves strangely when =org-roam-dailies-directory= is assigned before
-=org-roam-dailies.el= gets loaded. But our custom function needs to know path to
-this directory. Setting a variable here that can be used in custom code.
+=org-roam= behaves strangely when =org-roam-dailies-directory= gets assigned before
+=org-roam-dailies.el= loads. But our custom function needs to know path to
+this directory. Setting a variable here that shall get used in custom code.
 #+BEGIN_SRC emacs-lisp :tangle config.el
 (setq my/dailies-directory "daily/")
+#+END_SRC
+** KILL COMMENT hydra is better for =read-action=
+#+BEGIN_SRC emacs-lisp :tangle config.el
+(setq ivy-read-action-function #'ivy-hydra-read-action)
 #+END_SRC
 * Prettification
 ** Font Configuration
@@ -143,29 +143,38 @@ are the three important ones:
 
 They all accept either a font-spec, =font string ("Input Mono-12")=, or ~xlfd font
 string~.
-*** TODO Basic fonts
+*** Basic fonts
 - [ ] font size based on screen width
 #+BEGIN_SRC emacs-lisp :tangle config.el
 (setq doom-font
       (font-spec :family "Iosevka" :size 18))
 (setq doom-big-font
       (font-spec :family "Iosevka" :size 30))
+(setq doom-variable-pitch-font
+      (font-spec :family "Annapurna SIL" :size 18))
+;;
 #+END_SRC
 *** =Unicode-font=
 I also want to specify Unicode font, just in case
 #+BEGIN_SRC emacs-lisp :tangle config.el
 (setq doom-unicode-font (font-spec :family "Iosevka"))
 #+END_SRC
-*** COMMENT Additional mathematical symbol fonts
+*** KILL COMMENT Variable pitch fonts
+#+BEGIN_SRC emacs-lisp :tangle config.el
+(set-face-attribute 'default nil :family "Iosevka" :height 130)
+(set-face-attribute 'fixed-pitch nil :family "Iosevka")
+(set-face-attribute 'variable-pitch nil :family "Annapurna SIL")
+#+END_SRC
+*** KILL COMMENT Additional mathematical symbol fonts
 Additional mathematical symbols are enabled by adding =unicode-fonts-block-font=.
 #+BEGIN_SRC emacs-lisp :tangle config.el
 (after! unicode-fonts
-  (dolist (unicode-block '("Ancient Greek Numbers"
+  (dolist (unicode-block-mar '("Ancient Greek Numbers"
                            "Aegean Numbers"
                            "Ancient Symbols"
                            "Devanagari"
                            "Devanagari Extended"))
-    (push "Annapurna SIL" (cadr (assoc unicode-block unicode-fonts-block-font-mapping)))))
+    (push "Annapurna SIL" (cadr (assoc unicode-block-mar unicode-fonts-block-font-mapping)))))
 #+END_SRC
 
 #+RESULTS:
@@ -258,23 +267,55 @@ numbers are disabled. For relative line numbers, set this to `relative'.
 #+BEGIN_SRC emacs-lisp :tangle config.el
 (add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode)
 #+END_SRC
-*** bullets
+*** Better bullets with =org-superstar=
+**** Install Package
+=:lang (org +pretty)= comes with =org-superstar=, but we have disabled that module to get extra priorities working correctly. We want to add back =org-superstar=. Maybe a separate layer would be useful.
+#+BEGIN_SRC emacs-lisp :tangle packages.el
+(package! org-superstar)
+#+END_SRC
+**** Load package with =package!=
+#+BEGIN_SRC emacs-lisp :tangle config.el
+(use-package! org-superstar ; "prettier" bullets
+  :hook (org-mode . org-superstar-mode)
+  :init
+  :config
+  (setq org-superstar-leading-bullet ?\s
+        org-superstar-leading-fallback ?\s
+        org-hide-leading-stars nil))
+#+END_SRC
+**** Configure bullets
 #+BEGIN_SRC emacs-lisp :tangle config.el
 (after! org-superstar
-  (setq org-superstar-headline-bullets-list '("◉" "○" "✸" "✿" "✤" "✜" "◆" "▶")
+  ;(set-face-attribute 'org-superstar-header-bullet nil :height 1.1)
+  (setq org-superstar-headline-bullets-list '("🟍" "✫" "⚝" "✰" "✸" "✿" "✤" "✜")
         ;; org-superstar-headline-bullets-list '("Ⅰ" "Ⅱ" "Ⅲ" "Ⅳ" "Ⅴ" "Ⅵ" "Ⅶ" "Ⅷ" "Ⅸ" "Ⅹ")
-        org-superstar-prettify-item-bullets t ))
+        org-superstar-prettify-item-bullets nil )
+  (set-face-attribute 'org-level-8 nil :weight 'bold :inherit 'outline-8)
+  ;; Low levels are unimportant => no scaling
+  (set-face-attribute 'org-level-7 nil :inherit 'outline-7)
+  (set-face-attribute 'org-level-6 nil :inherit 'outline-6)
+  (set-face-attribute 'org-level-5 nil :inherit 'outline-5)
+  (set-face-attribute 'org-level-4 nil :inherit 'outline-4)
+  ;; Top ones get scaled the same as in LaTeX (\large, \Large, \LARGE)
+  (set-face-attribute 'org-level-3 nil :inherit 'outline-3 :height 1.35) ;\large
+  (set-face-attribute 'org-level-2 nil :inherit 'outline-2 :height 1.44) ;\Large
+  (set-face-attribute 'org-level-1 nil :inherit 'outline-1 :height 1.728) ;\LARGE
+ (set-face-attribute 'org-document-title nil
+                      :height 2.074
+                      :foreground 'unspecified
+                      :inherit 'outline-8))
 #+END_SRC
-*** ellipsis
+
+*** Ellipsis
 #+BEGIN_SRC emacs-lisp :tangle config.el
 (after! org
-  (setq org-ellipsis " ▾ "))
+  (setq org-ellipsis "▾"))
 #+END_SRC
 *** enable pretty tables
 #+BEGIN_SRC emacs-lisp :tangle config.el
 (setq global-org-pretty-table-mode t)
 #+END_SRC
-*** Bigger header
+*** COMMENT Bigger header
 #+BEGIN_SRC emacs-lisp :tangle config.el
 (after! org
   (custom-set-faces!
@@ -334,28 +375,7 @@ priority ligatures working correctly.
     :priority_e    "[#E]"
     :em_dash       "---")
 #+END_SRC
-*** =org-superstar=
-=:lang (org +pretty)= comes with =org-superstar=, but we have disabled that module to get extra priorities working correctly. We want to add back =org-superstar=. Maybe a separate layer would be useful.
-#+BEGIN_SRC emacs-lisp :tangle packages.el
-(package! org-superstar)
-#+END_SRC
-#+BEGIN_SRC emacs-lisp :tangle config.el
-(use-package! org-superstar ; "prettier" bullets
-  :hook (org-mode . org-superstar-mode)
-  :init
-  :config
-  ;; Make leading stars truly invisible, by rendering them as spaces!
-  (setq org-superstar-leading-bullet ?\s
-        org-superstar-leading-fallback ?\s
-        org-hide-leading-stars nil
-        org-superstar-todo-bullet-alist
-        '(("TODO" . 9744)
-          ("[ ]"  . 9744)
-          ("DONE" . 9745)
-          ("[X]"  . 9745))))
-#+END_SRC
-
-*** faces
+*** COMMENT faces
 #+BEGIN_SRC emacs-lisp :tangle config.el
 (setq org-fontify-done-headline t)
 
@@ -1096,7 +1116,7 @@ We enable the package after =org-mode= is loaded
 #+BEGIN_SRC emacs-lisp :tangle config.el
 (add-to-list 'org-tags-exclude-from-inheritance "project")
 #+END_SRC
-** COMMENT encryption
+** KILL COMMENT encryption
 #+BEGIN_SRC emacs-lisp :tangle config.el
 (setq org-roam-encrypt-files t)
 #+END_SRC
@@ -1257,7 +1277,6 @@ Lets configure our favorite language. It's =go= by-the-way
        ;;gist              ; interacting with github gists
        lookup              ; navigate your code and its documentation
        (lsp
-            +peek
             +eglot)
        magit             ; a git porcelain for Emacs
        make              ; run make tasks from Emacs
