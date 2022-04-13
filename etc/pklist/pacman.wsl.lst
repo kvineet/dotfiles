@@ -55,6 +55,7 @@ m4
 make
 man-db
 manjaro-release
+meld
 nano
 neovim
 nuspell
