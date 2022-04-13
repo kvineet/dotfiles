@@ -17,7 +17,15 @@ if test -d {{ joinPath .xdg.config "profile.d" }}; then
         done
         unset profile
 fi
-
+{{- if index . "tools" }}
+{{- if has "GWSL" .tools }}
+export GDK_SCALE=1 #GWSL
+export QT_SCALE_FACTOR=1 #GWSL
+export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2; exit;}'):0.0 #GWSL
+export PULSE_SERVER=tcp:$(cat /etc/resolv.conf | grep nameserver | awk '{print $2; exit;}') #GWSL
+export LIBGL_ALWAYS_INDIRECT=1 #GWSL
+{{- end }}
+{{- end }}
 appendpath "${GOPATH}/bin"
 appendpath {{ joinPath .xdg.data "/krew/bin" | quote }}
 unset -f appendpath

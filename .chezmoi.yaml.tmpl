@@ -21,9 +21,11 @@ data:
     config: {{ joinPath .chezmoi.homeDir ".config" }}
     cache: {{ joinPath .chezmoi.homeDir ".cache" }}
     data: {{ joinPath .chezmoi.homeDir ".local/share" }}
-{{- if (contains "nuance" .chezmoi.fqdnHostname) }}
   tools:
+    - sdkman
+{{- if (contains "nuance" .chezmoi.fqdnHostname) }}
     - azcli
+    - GWSL
   kubectl:
     - allctx
     - ctx

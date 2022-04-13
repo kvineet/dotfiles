@@ -160,3 +160,10 @@ compinit
 zinit cdreplay -q
 
 export EDITOR={{ .editor | quote }}
+
+{{- if index . "tools" }}
+{{- if has "sdkman" .tools }}
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+[[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]] && source "$SDKMAN_DIR/bin/sdkman-init.sh"
+{{- end }}
+{{- end }}
