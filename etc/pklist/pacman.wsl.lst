@@ -41,7 +41,6 @@ hyperv
 inetutils
 iproute2
 iputils
-jdk11-openjdk
 jq
 keychain
 kubectl
@@ -59,8 +58,6 @@ meld
 nano
 neovim
 nuspell
-openjdk11-doc
-openjdk11-src
 openssh
 pacman
 pacui
