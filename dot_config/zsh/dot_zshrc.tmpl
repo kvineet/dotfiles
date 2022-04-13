@@ -99,16 +99,6 @@ zinit ice \
     nocompile
 zinit light zdharma-continuum/null
 
-zi for \
-    as"program" \
-    atclone"./octant completion zsh > _octant" \
-    from"gh-r" \
-    light-mode \
-    mv"octant*/octant -> octant" \
-    bpick"*Linux-64bit*" \
-    src'_octant' \
-    vmware-tanzu/octant
-
 zinit as"null" wait"1" lucid for \
     sbin    Fakerr/git-recall \
     sbin    cloneopts paulirish/git-open \
@@ -126,29 +116,23 @@ zplugin light zdharma-continuum/git-url
 zinit ice from"gh-r" as"program"
 zinit light junegunn/fzf-bin
 
-zinit ice as"command" wait lucid \
-    atinit"export PYTHONPATH=$ZPFX/lib/python3.7/site-packages/" \
-    atclone"PYTHONPATH=$ZPFX/lib/python3.7/site-packages/ \
-    python3 setup.py --quiet install --prefix $ZPFX" \
-    atpull'%atclone' test'0' \
-    pick"$ZPFX/bin/asciinema"
-zinit light asciinema/asciinema.git
+zinit ice \
+    as"completion" \
+    id-as"chezmoi-completion" \
+    has"chezmoi" \
+    atclone"chezmoi completion zsh > _chezmoi" \
+    atpull"%atclone" \
+    nocompile
+zinit light zdharma-continuum/null
 
-zinit light-mode lucid wait has"chezmoi" for \
-  id-as"chezmoi_completion" \
-  as"completion" \
-  atclone"chezmoi completion zsh > _chezmoi" \
-  atpull"%atclone" \
-  run-atpull \
-  zdharma-continuum/null
-
-zinit light-mode lucid wait has"yq" for \
-  id-as"yq_completion" \
-  as"completion" \
-  atclone"yq shell-completion zsh > _yq_completion" \
-  atpull"%atclone" \
-  run-atpull \
-  zdharma-continuum/null
+zinit ice \
+    as"completion" \
+    id-as"yq-completion" \
+    has"yq" \
+    atclone"yq shell-completion zsh > _yq" \
+    atpull"%atclone" \
+    nocompile
+zinit light zdharma-continuum/null
 
 zinit ice wait lucid \
   id-as"vk-kubectl-helpers"
