@@ -16,6 +16,7 @@ cmake
 cpupower
 dbus-x11
 dconf
+direnv
 emacs
 fakeroot
 fd
