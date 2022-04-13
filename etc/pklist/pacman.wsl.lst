@@ -1,5 +1,6 @@
 alacritty
 aria2
+asciinema
 aspell
 aspell-en
 autoconf
@@ -62,7 +63,6 @@ openjdk11-src
 openssh
 pacman
 pacui
-pamac-cli
 parallel
 patch
 perf
@@ -93,6 +93,7 @@ tmon
 ttc-iosevka
 ttf-dejavu
 turbostat
+unzip
 usbip
 usbutils
 vi
@@ -100,6 +101,8 @@ vim
 wget
 which
 x86_energy_perf_policy
+xclip
 yakuake
 yay
+zip
 zsh
