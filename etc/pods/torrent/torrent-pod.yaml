@@ -106,6 +106,38 @@ spec:
           name: jackett-config
         - mountPath: /downloads
           name: torrent-watch
+    - name: prowlarr-server
+      image: lscr.io/linuxserver/prowlarr:develop
+      env:
+        - name: TZ
+          value: "Asia/Kolkata"
+        - name: PUID
+          value: 1000
+        - name: PGID
+          value: 1000
+        - name: PATH
+          value: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+        - name: HOME
+          value: /root
+        - name: LANGUAGE
+          value: en_US.UTF-8
+        - name: LANG
+          value: en_US.UTF-8
+        - name: TERM
+          value: xterm
+        - name: XDG_DATA_HOME
+          value: /config
+        - name: XDG_CONFIG_HOME
+          value: /config
+      ports:
+        - containerPort: 9696
+          hostPort: 13369
+          protocol: tcp
+      volumeMounts:
+        - mountPath: /config
+          name: prowlarr-config
+        - mountPath: /downloads
+          name: torrent-watch
     - name: transmission-server
       image: registry.gitlab.com/engineerwolf/docker-transmission:latest
       env:
@@ -154,6 +186,10 @@ spec:
     - name: jackett-config
       hostPath:
         path: /home/kvineet/.config/torrent/jackett
+        type: Directory
+    - name: prowlarr-config
+      hostPath:
+        path: /home/kvineet/.config/torrent/prowlarr
         type: Directory
     - name: transmission-config
       hostPath:
