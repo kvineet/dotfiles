@@ -9,7 +9,7 @@ spec:
   containers:
     # Create the first container: Dummy identd server on 113/TCP
     - name: sonarr-server
-      image: docker.io/linuxserver/sonarr:latest
+      image: lscr.io/linuxserver/sonarr:latest
       env:
         - name: TZ
           value: "Asia/Kolkata"
@@ -43,7 +43,7 @@ spec:
         - mountPath: /tv
           name: webdav
     - name: radarr-server
-      image: docker.io/linuxserver/radarr:latest
+      image: lscr.io/linuxserver/radarr:latest
       env:
         - name: TZ
           value: "Asia/Kolkata"
@@ -75,7 +75,7 @@ spec:
         - mountPath: /movies
           name: webdav
     - name: jackett-server
-      image: docker.io/linuxserver/jackett:latest
+      image: lscr.io/linuxserver/jackett:latest
       env:
         - name: TZ
           value: "Asia/Kolkata"
