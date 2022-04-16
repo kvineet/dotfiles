@@ -196,8 +196,10 @@ linux516-nvidia-470xx
 linux516-r8168
 linux517
 linux517-acpi_call
+linux517-broadcom-wl
 linux517-headers
 linux517-nvidia-470xx
+linux517-r8168
 logrotate
 lsb-release
 lsd
@@ -227,6 +229,7 @@ mhwd-db
 milou
 mkinitcpio-openswap
 mpv
+mpv-mpris
 mythes-en
 nano
 neofetch
