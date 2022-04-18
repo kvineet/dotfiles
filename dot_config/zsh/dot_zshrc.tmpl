@@ -138,6 +138,10 @@ zinit ice wait lucid \
   id-as"vk-kubectl-helpers"
 zinit snippet {{ joinPath .chezmoi.sourceDir "etc/zsh/kubectl-helpers/my-kubectl-functions.zsh" | quote }}
 
+# make'!...' -> run make before atclone & atpull
+zinit ice as"program" make'!' atclone'./direnv hook zsh > zhook.zsh' atpull'%atclone' src"zhook.zsh"
+zinit light direnv/direnv
+
 autoload -Uz compinit
 compinit
 
