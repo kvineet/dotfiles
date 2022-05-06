@@ -5,30 +5,35 @@
 # condition: t
 # --
 
-1. Execute steps described in [[https://wiki.nuancehce.com/display/CAS/Controller+upgrade+guide][Controller upgrade Guide]]
-   *Branch*: ${1:`(format-time-string "%Y-%m-%d")`}-CTRL
-   | Region         | Cluster         |
-   |----------------+-----------------|
-   | US east        | ueclu-${3:$(substring yas-text 0 1)}kub001   |
-   | Canada East    | ceclu-${3:$(substring yas-text 0 1)}gnaks001 |
-   | Australia East | zeclu-${3:$(substring yas-text 0 1)}gnaks001 |
+Due ${1:$(substring yas-text 5)}: Deploy containerized ${2:$$(yas-choose-value '("Muse" "Assure" "CAPD DQR"))} with ${3:`(concat "CAS" yas-text)`} and ${4:`(concat "Engine" yas-text)`} (${5:$$(yas-choose-value '("stage" "prod"))}),"
+${2:$(cond ((equal yas-text "Muse") "SRE-13184")((equal yas-text "Assure") "SRE-13185"))}",Ops Work Request,SRE,Major,actionable,CLU,deployment,platform,"
+# Execute steps described in [Controller upgrade Guide|https://wiki.nuancehce.com/display/CAS/Controller+upgrade+guide]
+*Branch*: ${1:`(format-time-string "%Y-%m-%d")`}-CTRL
+|| Region || Cluster ||
+| US east        | ueclu-${5:$(substring yas-text 0 1)}kub001   |
+| Canada East    | ceclu-${5:$(substring yas-text 0 1)}gnaks001 |
+| Australia East | zeclu-${5:$(substring yas-text 0 1)}gnaks001 |
 
-2. Execute steps described in [[https://wiki.nuancehce.com/display/CAS/Upgrading+containerized+environment+with+new+pipelines][Upgrading containerized environment with new pipelines]]
-| Variable                                         | Value                                       |
-|--------------------------------------------------+---------------------------------------------|
-| Branch                                           | $1-${2:$$(yas-choose-value '("MUS" "ASR"))} |
+# Execute steps described in [Upgrading containerized environment with new pipelines|https://wiki.nuancehce.com/display/CAS/Upgrading+containerized+environment+with+new+pipelines]
+|| Variable || Value ||
+| Branch                                           | $1-${2:$(cond ((equal yas-text "Muse") "MUS")((equal yas-text "Assure") "ASR")((equal yas-text "CAPD DQR") "DQR"))} |
 | Azure service connection name for build pipeline | HC-Clintegrity-CLU-Dev                      |
 | Azure container registry name                    | uecludgnacr                                 |
 
 Clusters
-| Region    | Subscription                 | Cluster                                      | namespace                                        |
-|-----------+------------------------------+----------------------------------------------+--------------------------------------------------|
-| US        | HC-Clintegrity-CLU-Prod      | ueclu-${3:$(substring yas-text 0 1)}kub001   |                                                  |
-|           |                              |                                              | muse-${3:$$(yas-choose-value '("stage" "prod"))} |
-|           |                              |                                              | assure-$3                                        |
-|           |                              |                                              | assure-mpower-$3                                 |
-| Canada    | HC-Clintegrity-CLU-Canada    | ceclu-${3:$(substring yas-text 0 1)}gnaks001 |                                                  |
-|           |                              |                                              | assure-ca$3                                      |
-| Australia | HC-Clintegrity-CLU-Australia | zeclu-${3:$(substring yas-text 0 1)}gnaks001 |                                                  |
-|           |                              |                                              | assure-ze$3                                      |
-|           |                              |                                              | assure-mpower-ze$3                               |
+
+|| Region || Subscription || Cluster || namespace ||
+| US        | HC-Clintegrity-CLU-Prod      | ueclu-${5:$(substring yas-text 0 1)}kub001   |                                                  |
+${2:$(cond ((equal yas-text "Muse") (concat "| | | | muse-" (yas-field-value 5) "|"))
+           ((equal yas-text "Assure") (with-temp-buffer (concat "| | | | assure-" (yas-field-value 5) "|" )
+)}
+
+|           |                              |                                              | assure-$5                                        |
+|           |                              |                                              | assure-mpower-$5                                 |
+| Canada    | HC-Clintegrity-CLU-Canada    | ceclu-${5:$(substring yas-text 0 1)}gnaks001 |                                                  |
+|           |                              |                                              | assure-ca$5                                      |
+| Australia | HC-Clintegrity-CLU-Australia | zeclu-${5:$(substring yas-text 0 1)}gnaks001 |                                                  |
+|           |                              |                                              | assure-ze$5                                      |
+|           |                              |                                              | assure-mpower-ze$5                               |
+",$5,"https://wiki.nuancehce.com/display/CAS/New+Pipeline+deployment+Guide
+"
