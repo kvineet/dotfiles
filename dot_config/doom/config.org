@@ -36,48 +36,38 @@ creates source block for =init.el=, while =srcdp= snippet creates source block f
 (setq user-mail-address "mail@kvineet.in")
 #+END_SRC
 * Files and Directories
+** Cloud
+#+BEGIN_SRC emacs-lisp :tangle config.el
+(setq cloud-directory (expand-file-name "cloud" (getenv "HOME"))
+      cloud--oneDrive-directory (expand-file-name "OneDrive" cloud-directory)
+      cloud--gdrive-directory (expand-file-name "GoogleDrive" cloud-directory))
+
+#+END_SRC
 ** vault
 #+BEGIN_SRC emacs-lisp :tangle config.el
-(setq vault-directory
-      (concat
-       (file-name-as-directory
-        (concat
-         (file-name-as-directory (getenv "HOME"))
-         "Vaults")
-        )
-       "OneDriveVault")
-      )
+(setq vault-directory (expand-file-name "OneDriveVault" (expand-file-name "Vaults" (getenv "HOME"))))
 #+END_SRC
-
-#+RESULTS:
-: /home/kvineet/Vaults/OneDriveVault
-
 ** Org
 Define paths related to org files.
 #+BEGIN_SRC emacs-lisp :tangle config.el
 (setq org-directory (cond
                      (IS-WINDOWS
-                      (concat (file-name-as-directory
-                               (concat (file-name-as-directory
-                                        (concat (file-name-as-directory
-                                                 (concat (file-name-as-directory (getenv "HOME")) "..")) "..")) "Sync")) "org"))
+                      (expand-file-name "org" (expand-file-name "sync" (expand-file-name "../.." (getenv "HOME")))))
                      (IS-LINUX
-                      (concat (file-name-as-directory vault-directory) "org"))
+                      (expand-file-name "org" vault-directory))
                      (t
-                      (concat (file-name-as-directory vault-directory) "org"))
+                      (expand-file-name "org" vault-directory))
                      ))
 #+END_SRC
 *** =org-roam= directory
 #+BEGIN_SRC emacs-lisp :tangle config.el
-(setq org-roam-directory (concat (file-name-as-directory org-directory) "roam"))
+(setq org-roam-directory (expand-file-name "roam" org-directory))
 #+END_SRC
 **** db file location
 #+BEGIN_SRC emacs-lisp :tangle config.el
 (setq org-roam-db-location
-      (concat (file-name-as-directory
-      (concat (file-name-as-directory
-      (concat (file-name-as-directory (getenv "XDG_CACHE_HOME")) "org")) "roam")) "roam.db"))
-(setq org-roam-index-file "index.org")
+      (expand-file-name "org/roam/roam.db" (getenv "XDG_CACHE_HOME"))
+      org-roam-index-file "index.org")
 #+END_SRC
 **** tag sources
 #+BEGIN_SRC emacs-lisp :tangle config.el
@@ -85,22 +75,24 @@ Define paths related to org files.
 #+END_SRC
 **** Recipes Files
 #+BEGIN_SRC emacs-lisp :tangle config.el
-  (defvar +org-capture-recipies (concat org-roam-directory "recipies.org"))
+  (defvar +org-capture-recipies (expand-file-name "recipies.org" org-roam-directory ))
 #+END_SRC
 *** =org-journal= directory
 #+BEGIN_SRC emacs-lisp :tangle config.el
-(setq org-journal-dir (concat (file-name-as-directory org-roam-directory) "journal"))
+(setq org-journal-dir (expand-file-name "journal" org-roam-directory))
 #+END_SRC
 ** ledger
 #+BEGIN_SRC emacs-lisp :tangle config.el
-(setq ledger-directory
-      (concat (file-name-as-directory vault-directory) "accounting"))
+(setq ledger-directory (expand-file-name "accounting" vault-directory))
 #+END_SRC
 ** leetcode
 #+BEGIN_SRC emacs-lisp :tangle config.el
 (setq leetcode-directory
-      (concat (file-name-as-directory
-               (concat (file-name-as-directory (getenv "HOME")) "projects")) "leetcode"))
+      (expand-file-name "projects/leetcode" (getenv "HOME")))
+#+END_SRC
+** E-book Library Root
+#+BEGIN_SRC emacs-lisp :tangle config.el
+(setq ebooks-root-directory (expand-file-name "Ebooks" (expand-file-name "webDav" (expand-file-name "srv" "/"))))
 #+END_SRC
 * TODO [#B] COMMENT systemd unit
 * Workarounds
@@ -151,10 +143,9 @@ string~.
 (setq doom-big-font
       (font-spec :family "Iosevka" :size 30))
 (setq doom-variable-pitch-font
-      (font-spec :family "Annapurna SIL" :size 18))
-;;
+      (font-spec :family "FiraGo" :size 23))
 #+END_SRC
-*** =Unicode-font=
+*** COMMENT =Unicode-font=
 I also want to specify Unicode font, just in case
 #+BEGIN_SRC emacs-lisp :tangle config.el
 (setq doom-unicode-font (font-spec :family "Iosevka"))
@@ -219,6 +210,7 @@ numbers are disabled. For relative line numbers, set this to `relative'.
             :checkedbox    "☑"
             :list_property "∷"
             :results       "➲"
+            :filetags      "📍"
             :property      "☸"
             :properties    "⚙"
             :end           "∎"
@@ -230,7 +222,7 @@ numbers are disabled. For relative line numbers, set this to `relative'.
             :email         "✉"
             :date          "🗓"
             :latex_header  "⇥"
-            :latex_class   "🄲"
+            :latex_class   "Ⲗ"
             :beamer_header "↠"
             :begin_quote   "❮"
             :end_quote     "❯"
@@ -326,54 +318,56 @@ numbers are disabled. For relative line numbers, set this to `relative'.
 priority ligatures working correctly.
 #+BEGIN_SRC emacs-lisp :tangle config.el
   (set-ligatures! 'org-mode
-    :checkbox      "[ ]"
-    :pending       "[-]"
-    :checkedbox    "[X]"
-    :list_property "::"
-    :results       "#+RESULTS:"
-    :results       "#+results:"
-    :property      "#+PROPERTY:"
-    :property      "#+property:"
-    :property      ":PROPERTIES:"
-    :property      ":properties:"
-    :startup       ":#+STARTUP:"
-    :startup       ":#+startup:"
-    :head          ":#+html_head:"
-    :head          ":#+HTML_HEAD:"
-    :end           ":END:"
-    :end           ":end:"
-    :options       "#+OPTIONS:"
-    :options       "#+options:"
-    :title         "#+title:"
-    :title         "#+TITLE:"
-    :subtitle      "#+SUBTITLE:"
-    :subtitle      "#+subtitle:"
     :author        "#+AUTHOR:"
     :author        "#+author:"
-    :email         "#+EMAIL:"
-    :email         "#+email:"
+    :beamer_header "#+BEAMER_HEADER:"
+    :beamer_header "#+beamer_header:"
+    :begin_export  "#+BEGIN_EXPORT"
+    :begin_export  "#+begin_export"
+    :begin_quote   "#+BEGIN_QUOTE"
+    :begin_quote   "#+begin_quote"
+    :checkbox      "[ ]"
+    :checkedbox    "[X]"
     :date          "#+DATE:"
     :date          "#+date:"
+    :email         "#+EMAIL:"
+    :email         "#+email:"
+    :em_dash       "---"
+    :end           ":END:"
+    :end           ":end:"
+    :end_export    "#+END_EXPORT"
+    :end_export    "#+end_export"
+    :end_quote     "#+END_QUOTE"
+    :end_quote     "#+end_quote"
+    :filetags       "#+filetag"
+    :filetags       "#+filetags"
+    :head          ":#+HTML_HEAD:"
+    :head          ":#+html_head:"
     :latex_class   "#+LATEX_CLASS:"
     :latex_class   "#+latex_class:"
     :latex_header  "#+LATEX_HEADER:"
     :latex_header  "#+latex_header:"
-    :beamer_header "#+BEAMER_HEADER:"
-    :beamer_header "#+beamer_header:"
-    :begin_quote   "#+BEGIN_QUOTE"
-    :begin_quote   "#+begin_quote"
-    :end_quote     "#+END_QUOTE"
-    :end_quote     "#+end_quote"
-    :begin_export  "#+BEGIN_EXPORT"
-    :begin_export  "#+begin_export"
-    :end_export    "#+END_EXPORT"
-    :end_export    "#+end_export"
+    :list_property "::"
+    :options       "#+OPTIONS:"
+    :options       "#+options:"
+    :pending       "[-]"
     :priority_a    "[#A]"
     :priority_b    "[#B]"
     :priority_c    "[#C]"
     :priority_d    "[#D]"
     :priority_e    "[#E]"
-    :em_dash       "---")
+    :property      "#+PROPERTY:"
+    :property      "#+property:"
+    :property      ":PROPERTIES:"
+    :property      ":properties:"
+    :results       "#+RESULTS:"
+    :results       "#+results:"
+    :startup       ":#+STARTUP:"
+    :startup       ":#+startup:"
+    :subtitle      "#+SUBTITLE:"
+    :subtitle      "#+subtitle:"
+    :title         "#+TITLE:"
+    :title         "#+title:")
 #+END_SRC
 *** COMMENT faces
 #+BEGIN_SRC emacs-lisp :tangle config.el
@@ -1148,7 +1142,7 @@ enable the package after ledger-mode
 #+BEGIN_SRC emacs-lisp :tangle config.el
 (use-package! company-ledger-acct
   :after (ledger-mode)
-  :custom (company-ledger-acct-master-file (concat (file-name-as-directory ledger-directory) "epoch/_accounts.ledger"))
+  :custom (company-ledger-acct-master-file (expand-file-name "epoch/_accounts.ledger" ledger-directory))
   (company-ledger-acct-currency-symbol "₹"))
 
 (set-company-backend! 'ledger-mode 'company-ledger-acct 'company-yasnippet 'company-capf)
@@ -1181,6 +1175,21 @@ Lets configure our favorite language. It's =go= by-the-way
 (setq leetcode-prefer-language "golang")
 (setq leetcode-prefer-sql "mysql")
 (setq leetcode-save-solutions t)
+#+END_SRC
+* Managing e-books with Calibre
+** Install the package
+#+BEGIN_SRC emacs-lisp :tangle packages.el
+(package! calibredb)
+#+END_SRC
+** Configure libraries
+#+BEGIN_SRC emacs-lisp :tangle config.el
+(setq calibredb-root-dir
+      (expand-file-name "General" ebooks-root-directory)
+      calibredb-db-dir (expand-file-name "metadata.db" calibredb-root-dir)
+      calibredb-library-alist `(,(expand-file-name "General" ebooks-root-directory)
+                                ,(expand-file-name "Technical" ebooks-root-directory)
+                                ,(expand-file-name "FanFiction" ebooks-root-directory)
+                                ,(expand-file-name "Graphics Novels" ebooks-root-directory)))
 #+END_SRC
 * Doom modules
 #+BEGIN_SRC emacs-lisp :tangle init.el
