@@ -1034,6 +1034,14 @@ We enable the package after =org-mode= is loaded
                                    ("d" "default" entry "* %?"
                                     :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
                                     :unnarrowed t)
+                                   ("p" "Person" entry
+                                    "* %?"
+                                    :target (file+head "people/%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: :person:\n#+date: %u\n")
+                                    :unnarrowed t)
+                                   ("h" "Hypothesis" entry
+                                    "* %?"
+                                    :target (file+head "hypothesis/%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: :hypothesis:\n#+date: %u\n")
+                                    :unnarrowed t)
                                    ("n" "Notes" entry
                                     "* %? \n%(format-time-string (org-time-stamp-format t) (time-stamp))\n"
                                     :target (file+head "notes/%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: :notes:\n#+date: %u\n")
@@ -1113,6 +1121,22 @@ We enable the package after =org-mode= is loaded
 ** KILL COMMENT encryption
 #+BEGIN_SRC emacs-lisp :tangle config.el
 (setq org-roam-encrypt-files t)
+#+END_SRC
+* =zetteldesk=
+** Install package
+#+BEGIN_SRC emacs-lisp :tangle packages.el
+;; ~/.doom.d/packages.el
+(package! zetteldesk
+  :recipe (:host github :repo "Vidianos-Giannitsis/zetteldesk.el"))
+#+END_SRC
+** COMMENT Configuration
+#+BEGIN_SRC emacs-lisp :tangle config.el
+(use-package! zetteldesk
+  :after org-roam
+  :config
+  (setq zetteldesk-kb-hydra-prefix (kbd "C-c z"))
+  (zetteldesk-mode)
+  (require 'zetteldesk-kb))
 #+END_SRC
 * COMMENT Elfeed
 #+BEGIN_SRC emacs-lisp :tangle packages.el

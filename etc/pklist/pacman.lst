@@ -187,12 +187,6 @@ linux510-broadcom-wl
 linux510-headers
 linux510-nvidia-470xx
 linux510-r8168
-linux516
-linux516-acpi_call
-linux516-broadcom-wl
-linux516-headers
-linux516-nvidia-470xx
-linux516-r8168
 linux517
 linux517-acpi_call
 linux517-broadcom-wl
