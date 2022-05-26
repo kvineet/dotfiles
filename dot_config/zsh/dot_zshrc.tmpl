@@ -41,8 +41,8 @@ bindkey '^[[1;5C' forward-word                                  #
 bindkey '^H' backward-kill-word                                 # delete previous word with ctrl+backspace
 bindkey '^[[Z' undo                                             # Shift+tab undo last action
 
-ZINIT_HOME={{ joinPath .xdg.data "/zinit/zinit.git" | quote }}
-source source "${ZINIT_HOME}/zinit.zsh"
+ZINIT_HOME={{ joinPath .xdg.data "/zinit" | quote }}
+source "${ZINIT_HOME}/zinit.git/zinit.zsh"
 
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
@@ -72,11 +72,8 @@ zinit light romkatv/powerlevel10k
 {{ end }}
 
 zinit light zdharma-continuum/history-search-multi-word
-
 zinit light zdharma-continuum/fast-syntax-highlighting
-
 zinit light zsh-users/zsh-autosuggestions
-
 zplugin light "zdharma-continuum/zsh-diff-so-fancy"
 
 zinit ice wait lucid
@@ -117,14 +114,14 @@ zplugin light zdharma-continuum/git-url
 zinit ice from"gh-r" as"program"
 zinit light junegunn/fzf-bin
 
-zinit ice \
-    as"completion" \
-    id-as"chezmoi-completion" \
-    has"chezmoi" \
-    atclone"chezmoi completion zsh > _chezmoi" \
-    atpull"%atclone" \
-    nocompile
-zinit light zdharma-continuum/null
+#zinit ice \
+#    as"completion" \
+#    id-as"chezmoi-completion" \
+#    has"chezmoi" \
+#    atclone"chezmoi completion zsh > _chezmoi" \
+#    atpull"%atclone" \
+#    nocompile
+#zinit light zdharma-continuum/null
 
 zinit ice \
     as"completion" \
@@ -136,11 +133,16 @@ zinit ice \
 zinit light zdharma-continuum/null
 
 zinit ice wait lucid \
-  id-as"vk-kubectl-helpers"
+  id-as"vk-kubectl-helpers" \
+  nocompile
 zinit snippet {{ joinPath .chezmoi.sourceDir "etc/zsh/kubectl-helpers/my-kubectl-functions.zsh" | quote }}
 
 # make'!...' -> run make before atclone & atpull
-zinit ice as"program" make'!' atclone'./direnv hook zsh > zhook.zsh' atpull'%atclone' src"zhook.zsh"
+zinit ice as"program" \
+    make'!' \
+    atclone'./direnv hook zsh > zhook.zsh' \
+    atpull'%atclone' \
+    src"zhook.zsh"
 zinit light direnv/direnv
 
 autoload -Uz compinit
