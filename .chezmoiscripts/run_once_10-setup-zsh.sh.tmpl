@@ -20,5 +20,5 @@ fi
 printf " Changing user default shell to "
 {{ template "emph" "zsh" -}}
 printf "\n"
-chsh -s /bin/zsh
+sudo chsh -s /bin/zsh {{.chezmoi.username}}
 {{- end }}
