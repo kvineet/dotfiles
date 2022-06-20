@@ -249,6 +249,7 @@ numbers are disabled. For relative line numbers, set this to `relative'.
   org-collector
   org-panel
   org-screen
+  org-checklist
   org-toc))
 
 (eval-after-load 'org
@@ -1214,6 +1215,10 @@ Lets configure our favorite language. It's =go= by-the-way
                                 ,(expand-file-name "Technical" ebooks-root-directory)
                                 ,(expand-file-name "FanFiction" ebooks-root-directory)
                                 ,(expand-file-name "Graphics Novels" ebooks-root-directory)))
+#+END_SRC
+* Power thesaurus
+#+BEGIN_SRC emacs-lisp :tangle packages.el
+(package! powerthesaurus)
 #+END_SRC
 * Doom modules
 #+BEGIN_SRC emacs-lisp :tangle init.el
